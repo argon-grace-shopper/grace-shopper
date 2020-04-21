@@ -5,8 +5,8 @@ const Order = db.define('order', {
   pricePaid: {
     type: Sequelize.FLOAT
   },
-  cartQuantity: {
-    type: Sequelize.INTEGER
+  completed: {
+    type: Sequelize.BOOLEAN
   }
 })
 

@@ -26,7 +26,8 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'image1.jpg'
+    defaultValue:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSq7pe75gKr2h9OeyqbCHCK9ue_X5XBLrXHbT0DMBAPtEEW2Um2&usqp=CAU'
   }
 })
 
