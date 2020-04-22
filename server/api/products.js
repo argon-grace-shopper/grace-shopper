@@ -1,11 +1,13 @@
 const router = require('express').Router()
-const {Product, Review} = require('../db')
+const {Product, Category, Review} = require('../db')
 
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll({
+      include: Category
+    })
     res.send(products)
   } catch (err) {
     next(err)
