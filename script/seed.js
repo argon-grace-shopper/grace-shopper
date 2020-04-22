@@ -23,7 +23,8 @@ async function seed() {
   const products = [
     {
       title: 'Eucalyptus',
-      description: 'has healing properties, koalas eat it',
+      description:
+        'has healing properties, koalas eat it, poisonous to most other things',
       price: 29.99,
       inventoryQuantity: 20,
       imageUrl:
