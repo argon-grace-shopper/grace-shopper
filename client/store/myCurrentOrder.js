@@ -23,6 +23,19 @@ export const fetchMyCurrentOrder = userId => {
   }
 }
 
+export const updateMyCurrentOrder = (order, product) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/cart/${order[0].user.id}`, product)
+      const {data} = await axios.get(`/api/cart/${order[0].user.id}`)
+      dispatch(setCreatedOrder(data))
+      console.log('updated data', data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export default function createdOrderReducer(state = initialValue, action) {
   switch (action.type) {
     case SET_CREATED_ORDER:

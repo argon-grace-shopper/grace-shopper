@@ -86,6 +86,7 @@ async function seed() {
   const orderProducts = [
     {orderId: 1, productId: 1, cartQuantity: 1, checkoutPrice: 19.99},
     {orderId: 2, productId: 2, cartQuantity: 2, checkoutPrice: 29.99},
+    {orderId: 2, productId: 1, cartQuantity: 1, checkoutPrice: 19.99},
     {orderId: 3, productId: 3, cartQuantity: 1, checkoutPrice: 39.99},
     {orderId: 4, productId: 4, cartQuantity: 3, checkoutPrice: 15.99},
     {orderId: 5, productId: 5, cartQuantity: 1, checkoutPrice: 29.99}

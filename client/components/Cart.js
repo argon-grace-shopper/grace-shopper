@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {fetchMyCurrentOrder} from '../store/myCurrentOrder'
+import {
+  fetchMyCurrentOrder,
+  updateMyCurrentOrder
+} from '../store/myCurrentOrder'
 import {connect} from 'react-redux'
 
 const mapToProps = state => ({
@@ -8,7 +11,9 @@ const mapToProps = state => ({
 
 const dispatchToProps = dispatch => {
   return {
-    getMyCurrentOrder: userId => dispatch(fetchMyCurrentOrder(userId))
+    getMyCurrentOrder: userId => dispatch(fetchMyCurrentOrder(userId)),
+    updateMyCurrentOrder: (order, product) =>
+      dispatch(updateMyCurrentOrder(order, product))
   }
 }
 
@@ -16,6 +21,12 @@ export const Cart = props => {
   useEffect(() => {
     props.getMyCurrentOrder(props.match.params.userId)
   }, [])
+
+  const handleDelete = product => {
+    console.log({product})
+    console.log('handle delete')
+    props.updateMyCurrentOrder(props.createdOrder, product)
+  }
 
   return (
     <div>
@@ -25,11 +36,24 @@ export const Cart = props => {
       ) : (
         <div>
           {props.createdOrder[0].products.map(product => (
-            <span key={product.id}>
-              <img src={product.imageUrl} style={{width: 100, height: 100}} />
-              <p>{product.title}</p>
-              <p>{product.price}</p>
-            </span>
+            <div key={product.id}>
+              <span>
+                <img src={product.imageUrl} style={{width: 100, height: 100}} />
+                <p>{product.title}</p>
+                <label htmlFor="qty">Qty:</label>
+                <select id="qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <p>${product.price}</p>
+                <button type="button" onClick={() => handleDelete(product)}>
+                  Remove
+                </button>{' '}
+              </span>
+            </div>
           ))}
         </div>
       )}
