@@ -2,11 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import SingleProduct from './SingleProduct'
-import {fetchProducts} from './products'
+import {fetchAllProducts} from './products'
 
 export class AllProducts extends React.Component {
   componentDidMount() {
-    this.props.getProducts()
+    this.props.getAllProducts()
   }
 
   render() {
@@ -20,16 +20,11 @@ export class AllProducts extends React.Component {
         <h2>ALL PRODUCTS</h2>
         <div className="sidebar">
           <h3>Product Categories</h3>
-          <ul>
+          <select>
             {categories.map(category => {
-              return (
-                <li key={category.id}>
-                  {' '}
-                  <a href={`/${category.name}`}>{category.name}</a>{' '}
-                </li>
-              )
+              return <option key={category.id}>{category.name}</option>
             })}
-          </ul>
+          </select>
         </div>
         <div className="all-products-container">
           {products.map(product => {
@@ -57,7 +52,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts())
+    getAllProducts: () => dispatch(fetchAllProducts())
   }
 }
 
