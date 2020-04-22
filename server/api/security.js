@@ -2,7 +2,7 @@
 // module.exports = router
 
 function checkParamIdWithUserId(req, res, next) {
-  if (req.params.userId === req.user.id) {
+  if (req.user && req.params.userId === req.user.id) {
     next()
   } else {
     res.status(401).send('Unauthorized: cannot access other accounts')
