@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import productReducer, {fetchSingleProduct} from '../store/product'
-import orderReducer, {createOrder, updateOrder} from '../store/currentOrder'
+import {fetchSingleProduct} from '../store/product'
+import {createOrder, updateOrder} from '../store/currentOrder'
+import {addToCart} from '../store/myCurrentOrder'
 import Reviews from './Reviews'
 
 class SingleProduct extends React.Component {
@@ -21,8 +22,12 @@ class SingleProduct extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     try {
-      const productId = this.props.match.params.id
-      this.props.updateOrder(productId)
+      const product = {
+        productId: this.props.match.params.id,
+        cartQuantity: 1
+      }
+      console.log('event', e)
+      // this.props.addToCart(product)
     } catch (err) {
       console.log(err)
     }
@@ -39,14 +44,11 @@ class SingleProduct extends React.Component {
         </div>
         <p>{product.desciption}</p>
         <img src={product.imageUrl} />
+        <button type="submit" onClick={this.handleSubmit}>
+          Add to Cart
+        </button>
         <Reviews productId={this.props.match.params.id} />
-        {/* {product.reviews ? (
-          <p>reviews</p>
-        ) : (
-          <p>Be the first to review this product!</p>
-        )} */}
         {/* check if theres already an order add product id to order, if not create order, and add product id */}
-        <button onClick={this.handleSubmit}>Buy</button>
       </div>
     ) : (
       <div>..Loading </div>
