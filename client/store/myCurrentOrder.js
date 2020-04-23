@@ -23,10 +23,10 @@ export const fetchMyCurrentOrder = userId => {
   }
 }
 
-export const updateMyCurrentOrder = (order, product) => {
+export const deleteItemFromOrder = (order, product) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/cart/${order[0].user.id}`, product)
+      await axios.put(`/api/cart/remove-from-cart/${order[0].user.id}`, product)
       const {data} = await axios.get(`/api/cart/${order[0].user.id}`)
       dispatch(setCreatedOrder(data))
       console.log('updated data', data)

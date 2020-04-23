@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {
-  fetchMyCurrentOrder,
-  updateMyCurrentOrder
-} from '../store/myCurrentOrder'
+import {fetchMyCurrentOrder, deleteItemFromOrder} from '../store/myCurrentOrder'
 import {connect} from 'react-redux'
 
 const mapToProps = state => ({
@@ -12,20 +9,41 @@ const mapToProps = state => ({
 const dispatchToProps = dispatch => {
   return {
     getMyCurrentOrder: userId => dispatch(fetchMyCurrentOrder(userId)),
-    updateMyCurrentOrder: (order, product) =>
-      dispatch(updateMyCurrentOrder(order, product))
+    deleteItemFromOrder: (order, product) =>
+      dispatch(deleteItemFromOrder(order, product))
   }
 }
 
 export const Cart = props => {
+  const [subTotal, setSubTotal] = useState()
+
+  const subtotalCalc = () => {
+    if (props.createdOrder.length > 0) {
+      let total = 0
+      console.log(props.createdOrder)
+      props.createdOrder[0].products.forEach(product => {
+        total += product.price * product.order_product.cartQuantity
+      })
+      setSubTotal(total.toFixed(2))
+    }
+  }
   useEffect(() => {
     props.getMyCurrentOrder(props.match.params.userId)
   }, [])
 
-  const handleDelete = product => {
-    console.log({product})
-    console.log('handle delete')
-    props.updateMyCurrentOrder(props.createdOrder, product)
+  useEffect(
+    () => {
+      subtotalCalc()
+    },
+    [props.createdOrder]
+  )
+
+  const handleDeleteFromCart = product => {
+    props.deleteItemFromOrder(props.createdOrder, product)
+  }
+
+  const handleChangeQty = (event, productId) => {
+    //have some thunk that takes event.target.value and productId and updates the stuff in the database and then reflects it on front-end
   }
 
   return (
@@ -41,20 +59,34 @@ export const Cart = props => {
                 <img src={product.imageUrl} style={{width: 100, height: 100}} />
                 <p>{product.title}</p>
                 <label htmlFor="qty">Qty:</label>
-                <select id="qty">
+                <select
+                  id="qty"
+                  defaultValue={product.order_product.cartQuantity}
+                  onChange={e => handleChangeQty(e, product.id)}
+                >
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
-                <p>${product.price}</p>
-                <button type="button" onClick={() => handleDelete(product)}>
+                <p>
+                  $
+                  {(product.price * product.order_product.cartQuantity).toFixed(
+                    2
+                  )}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteFromCart(product)}
+                >
                   Remove
                 </button>{' '}
               </span>
             </div>
           ))}
+          <div>Subtotal: ${subTotal}</div>
+          <button type="button">Checkout</button>
         </div>
       )}
     </div>
