@@ -2,19 +2,6 @@ const router = require('express').Router()
 const {Product, Review, Order, Category} = require('../db/models')
 module.exports = router
 
-router.get('/:productId', async (req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.productId, {
-      include: Review,
-      Order
-    })
-    res.json(product)
-  }catch(err){
-    next(err)
-  }
-  })
-
-
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
@@ -32,6 +19,32 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:productId', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId, {
+      include: Order
+    })
+    res.json(product)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:productId/reviews', async (req, res, next) => {
+  try {
+    const productId = req.params.productId
+    const reviews = await Review.findAll({where: {productId}})
+    res.json(reviews)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/:productId/reviews', (req, res, next) => {
+  Review.create(req.body)
+    .then(review => res.send(review))
+    .catch(next)
+})
 
 router.put('/:productId', (req, res, next) => {
   Product.findByPk(req.params.productId)
