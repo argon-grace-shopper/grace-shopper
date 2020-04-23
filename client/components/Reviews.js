@@ -1,9 +1,11 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {fetchReviews, postReview} from '../store/reviews'
 
 export class Review extends React.Component {
   constructor() {
     super()
-    this.reviewFlag = false
+    this.reviewFlag = true
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
@@ -20,37 +22,33 @@ export class Review extends React.Component {
   handleSubmit(event) {
     try {
       event.preventDefault()
-      // const res = await axios.post("/api/campuses", {
-      //   name: this.state.name,
-      //   address: this.state.address,
-      //   description: this.state.description
-      // });
-      // console.log(res.data);
 
-      this.props.postCampus(this.state)
-      this.props.getCampuses()
-
+      const review = {
+        description: this.state.reviewBody,
+        productId: this.props.productId,
+        userId: 1
+      }
+      this.props.postReview(review, this.props.productId)
       this.setState({
-        name: '',
-        address: '',
-        description: ''
+        reviewBody: ''
       })
-      this.clickStatus = false
     } catch (err) {
       console.log(err)
       this.setState({
-        name: ''
+        reviewBody: ''
       })
     }
   }
 
   componentDidMount() {
-    if (this.props.user.product.productId) this.reviewFlag = true
+    this.props.getReviews(this.props.productId)
+    // if (this.props.user.product.productId) this.reviewFlag = true
   }
 
   render() {
     const reviews = this.props.reviews
     const productId = this.props.productId
+    const userId = this.props.userId
 
     return (
       <div className="reviews-container">
@@ -69,8 +67,15 @@ export class Review extends React.Component {
         {this.reviewFlag && (
           <div className="reviews-panel">
             <h3>Add Review (100 word minimum)</h3>
-            <input type="text" name="reviewBody" />
-            <button type="submit">Submit</button>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                name="reviewBody"
+                value={this.state.reviewBody}
+                onChange={this.handleChange}
+              />
+              <button type="submit">Submit</button>
+            </form>
           </div>
         )}
       </div>
@@ -78,4 +83,17 @@ export class Review extends React.Component {
   }
 }
 
-export default Review
+const mapState = state => {
+  return {
+    reviews: state.reviews
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getReviews: productId => dispatch(fetchReviews(productId)),
+    postReview: (review, productId) => dispatch(postReview(review, productId))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Review)

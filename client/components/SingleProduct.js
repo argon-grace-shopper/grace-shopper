@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import productReducer, {fetchSingleProduct} from '../store/product'
 import orderReducer, {createOrder, updateOrder} from '../store/currentOrder'
+import Reviews from './Reviews'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -38,11 +39,12 @@ class SingleProduct extends React.Component {
         </div>
         <p>{product.desciption}</p>
         <img src={product.imageUrl} />
-        {product.reviews ? (
+        <Reviews productId={this.props.match.params.id} />
+        {/* {product.reviews ? (
           <p>reviews</p>
         ) : (
           <p>Be the first to review this product!</p>
-        )}
+        )} */}
         {/* check if theres already an order add product id to order, if not create order, and add product id */}
         <button onClick={this.handleSubmit}>Buy</button>
       </div>
