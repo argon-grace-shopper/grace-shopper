@@ -22,14 +22,11 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
-//remove product from the order
+
 router.put('/remove-from-cart/:userId', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
-    //console.log(createdOrdersById[0].__proto__)
     await createdOrdersById[0].removeProduct(req.body.id)
-    console.log(createdOrdersById)
-
     res.json(createdOrdersById)
   } catch (err) {
     next(err)
@@ -38,25 +35,23 @@ router.put('/remove-from-cart/:userId', async (req, res, next) => {
 router.put('/update-qty/:userId', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
-    // console.log(createdOrdersById.__proto__)
+    await createdOrdersById[0].addProduct(req.body.id, {
+      through: {cartQuantity: req.body.order_product.cartQuantity}
+    })
+    res.json(createdOrdersById[0])
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/add-to-cart/:userId', async (req, res, next) => {
+  try {
+    const createdOrdersById = await Order.findAll(findByUser(req))
+    await createdOrdersById[0].addProduct(req.body.id)
+    res.json(createdOrdersById[0])
   } catch (err) {
     next(err)
   }
 })
 
 //set checkoutprice
-
-//magic methods
-// getUser: [Function],
-// setUser: [Function],
-// createUser: [Function],
-// getProducts: [Function],
-// countProducts: [Function],
-// hasProduct: [Function],
-// hasProducts: [Function],
-// setProducts: [Function],
-// addProduct: [Function],
-// addProducts: [Function],
-// removeProduct: [Function],
-// removeProducts: [Function],
-// createProduct: [Function]

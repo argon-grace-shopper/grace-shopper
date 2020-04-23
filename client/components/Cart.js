@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {fetchMyCurrentOrder, deleteItemFromOrder} from '../store/myCurrentOrder'
+import {
+  fetchMyCurrentOrder,
+  deleteItemFromOrder,
+  updateQtyInCart
+} from '../store/myCurrentOrder'
 import {connect} from 'react-redux'
 
 const mapToProps = state => ({
@@ -10,7 +14,9 @@ const dispatchToProps = dispatch => {
   return {
     getMyCurrentOrder: userId => dispatch(fetchMyCurrentOrder(userId)),
     deleteItemFromOrder: (order, product) =>
-      dispatch(deleteItemFromOrder(order, product))
+      dispatch(deleteItemFromOrder(order, product)),
+    updateQtyInCart: (order, product) =>
+      dispatch(updateQtyInCart(order, product))
   }
 }
 
@@ -20,7 +26,6 @@ export const Cart = props => {
   const subtotalCalc = () => {
     if (props.createdOrder.length > 0) {
       let total = 0
-      console.log(props.createdOrder)
       props.createdOrder[0].products.forEach(product => {
         total += product.price * product.order_product.cartQuantity
       })
@@ -42,8 +47,9 @@ export const Cart = props => {
     props.deleteItemFromOrder(props.createdOrder, product)
   }
 
-  const handleChangeQty = (event, productId) => {
-    //have some thunk that takes event.target.value and productId and updates the stuff in the database and then reflects it on front-end
+  const handleChangeQty = (event, product) => {
+    product.order_product.cartQuantity = event.target.value
+    props.updateQtyInCart(props.createdOrder, product)
   }
 
   return (
@@ -62,7 +68,7 @@ export const Cart = props => {
                 <select
                   id="qty"
                   defaultValue={product.order_product.cartQuantity}
-                  onChange={e => handleChangeQty(e, product.id)}
+                  onChange={e => handleChangeQty(e, product)}
                 >
                   <option value="1">1</option>
                   <option value="2">2</option>
