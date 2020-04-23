@@ -2,54 +2,51 @@ import React, {useEffect, useState} from 'react'
 import {
   fetchMyCurrentOrder,
   deleteItemFromOrder,
-  updateQtyInCart
+  updateQtyInCart,
 } from '../store/myCurrentOrder'
 import {connect} from 'react-redux'
 
-const mapToProps = state => ({
-  createdOrder: state.createdOrder
+const mapToProps = (state) => ({
+  createdOrder: state.createdOrder,
 })
 
-const dispatchToProps = dispatch => {
+const dispatchToProps = (dispatch) => {
   return {
-    getMyCurrentOrder: userId => dispatch(fetchMyCurrentOrder(userId)),
+    getMyCurrentOrder: (userId) => dispatch(fetchMyCurrentOrder(userId)),
     deleteItemFromOrder: (order, product) =>
       dispatch(deleteItemFromOrder(order, product)),
     updateQtyInCart: (order, product) =>
-      dispatch(updateQtyInCart(order, product))
+      dispatch(updateQtyInCart(order, product)),
   }
 }
 
-export const Cart = props => {
+export const Cart = (props) => {
   const [subTotal, setSubTotal] = useState()
 
   const subtotalCalc = () => {
     if (props.createdOrder.length > 0) {
       let total = 0
-      props.createdOrder[0].products.forEach(product => {
+      props.createdOrder[0].products.forEach((product) => {
         total += product.price * product.order_product.cartQuantity
       })
       setSubTotal(total.toFixed(2))
     }
   }
   useEffect(() => {
-    props.getMyCurrentOrder(props.match.params.userId)
+    props.getMyCurrentOrder()
   }, [])
 
-  useEffect(
-    () => {
-      subtotalCalc()
-    },
-    [props.createdOrder]
-  )
+  useEffect(() => {
+    subtotalCalc()
+  }, [props.createdOrder])
 
-  const handleDeleteFromCart = product => {
-    props.deleteItemFromOrder(props.createdOrder, product)
+  const handleDeleteFromCart = (product) => {
+    props.deleteItemFromOrder(product)
   }
 
   const handleChangeQty = (event, product) => {
     product.order_product.cartQuantity = event.target.value
-    props.updateQtyInCart(props.createdOrder, product)
+    props.updateQtyInCart(product)
   }
 
   return (
@@ -59,7 +56,7 @@ export const Cart = props => {
         <h4> There is nothing in the cart</h4>
       ) : (
         <div>
-          {props.createdOrder[0].products.map(product => (
+          {props.createdOrder[0].products.map((product) => (
             <div key={product.id}>
               <span>
                 <img src={product.imageUrl} style={{width: 100, height: 100}} />
@@ -68,7 +65,7 @@ export const Cart = props => {
                 <select
                   id="qty"
                   defaultValue={product.order_product.cartQuantity}
-                  onChange={e => handleChangeQty(e, product)}
+                  onChange={(e) => handleChangeQty(e, product)}
                 >
                   <option value="1">1</option>
                   <option value="2">2</option>
