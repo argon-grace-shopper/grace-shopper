@@ -39,11 +39,8 @@ export class Review extends React.Component {
     } catch (err) {
       console.log(err)
       this.setState({
-        name: '',
-        address: '',
-        description: ''
+        name: ''
       })
-      this.clickStatus = false
     }
   }
 
