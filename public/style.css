@@ -19,3 +19,31 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.all-products-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.all-products-panel-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.all-products-panel {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.all-products-panel img {
+  max-width: 100%;
+}
+
+.sidebar {
+  background-color: cornflowerblue;
+  min-width: 20%;
+  display: flex;
+  flex-direction: column;
+}

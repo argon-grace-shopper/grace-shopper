@@ -68,13 +68,27 @@ async function seed() {
     {name: 'vine'}
   ]
 
+  const orders = [
+    {status: 'processing'},
+    {status: 'created'},
+    {status: 'complete'},
+    {status: 'complete'},
+    {status: 'cancelled'}
+  ]
+  const orderProducts = [
+    {orderId: 1, productId: 1, cartQuantity: 1, checkoutPrice: 19.99},
+    {orderId: 2, productId: 2, cartQuantity: 2, checkoutPrice: 29.99},
+    {orderId: 3, productId: 3, cartQuantity: 1, checkoutPrice: 39.99},
+    {orderId: 4, productId: 4, cartQuantity: 3, checkoutPrice: 15.99},
+    {orderId: 5, productId: 5, cartQuantity: 1, checkoutPrice: 29.99}
+  ]
   const reviews = [
     {description: 'Loved my aloe vera! 10/10 would recommend'},
     {description: 'I killed my purple passion vine'},
     {description: "My oak tree isn't growing fast enough"},
     {description: 'Aloe vera tastes funny'}
   ]
-  console.log(Object.keys(User.prototype))
+  console.log('magic methods', Object.keys(User.prototype))
 
   const orders = [
     {status: 'processing'},

@@ -1,13 +1,17 @@
-### Assignee Tasks
+### Front-end
 
-* [ ] added unit tests (or none needed)
-* [ ] written relevant docs (or none needed)
-* [ ] referenced any relevant issues (or none exist)
+* [ ] Build single product react component to display (name, image, price, avg. rating, all ratings and comments [later paginate ratings as well]
+* [ ] Setup redux action creators and thunks to fetch/set state with single product information.
 
-### Guidelines
 
-Please add a description of this Pull Request's motivation, scope, outstanding issues or potential alternatives, reasoning behind the current solution, and any other relevant information for posterity.
+### Back-end:
+
+* [ ] Setup API route with specific single product ID as parameter. (use /api/products/:productId)
+
+
+### Response payload:
+[{
+name, image, price, avg. rating, all ratings and comments
+}]
 
 ---
-
-_Your PR Notes Here_
