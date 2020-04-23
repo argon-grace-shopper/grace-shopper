@@ -20,6 +20,9 @@ form div {
   display: inline-block;
 }
 
+single-product {
+  display: flex;
+}
 .all-products-container {
   display: flex;
   flex-direction: row;
