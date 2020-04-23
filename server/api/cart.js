@@ -3,13 +3,13 @@ module.exports = router
 const Order = require('../db/models/order')
 const Order_Product = require('../db/models/order_product')
 
-const findByUser = (req) => {
+const findByUser = req => {
   return {
     where: {
       userId: req.params.userId,
-      status: 'created',
+      status: 'created'
     },
-    include: {all: true},
+    include: {all: true}
   }
 }
 
@@ -26,7 +26,7 @@ router.get('/:userId', async (req, res, next) => {
 router.put('/remove-from-cart/:userId', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
-    // console.log(createdOrdersById[0].__proto__)
+    //console.log(createdOrdersById[0].__proto__)
     await createdOrdersById[0].removeProduct(req.body.id)
     console.log(createdOrdersById)
 
@@ -38,7 +38,7 @@ router.put('/remove-from-cart/:userId', async (req, res, next) => {
 router.put('/update-qty/:userId', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
-    //console.log(createdOrdersById.__proto__)
+    // console.log(createdOrdersById.__proto__)
   } catch (err) {
     next(err)
   }
