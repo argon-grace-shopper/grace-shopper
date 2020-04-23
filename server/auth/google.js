@@ -4,10 +4,10 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 module.exports = router
 
-// retrieve google secret and client id
 const dotenv = require('dotenv')
 dotenv.config()
 
+// retrieve google secret and client id
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {

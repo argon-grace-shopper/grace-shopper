@@ -101,7 +101,6 @@ async function seed() {
     {description: 'Aloe vera tastes funny', userId: 2, productId: 2},
   ]
 
-
   const orders = [
     {status: 'processing', userId: 1},
     {status: 'created', userId: 1},
