@@ -4,17 +4,17 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 module.exports = router
 
-// retrieve google secret and client id
 const dotenv = require('dotenv')
 dotenv.config()
 
+// retrieve google secret and client id
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK,
+    callbackURL: process.env.GOOGLE_CALLBACK
   }
 
   const strategy = new GoogleStrategy(
@@ -29,7 +29,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
       User.findOrCreate({
         where: {googleId},
-        defaults: {email, imgUrl, firstName, lastName, fullName},
+        defaults: {email, imgUrl, firstName, lastName, fullName}
       })
         .then(([user]) => done(null, user))
         .catch(done)
@@ -47,7 +47,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     '/callback',
     passport.authenticate('google', {
       successRedirect: '/home',
-      failureRedirect: '/login',
+      failureRedirect: '/login'
     })
   )
 }

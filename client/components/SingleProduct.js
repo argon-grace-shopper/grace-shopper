@@ -2,36 +2,48 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/product'
 import {createOrder, updateOrder} from '../store/currentOrder'
-import {addToCart} from '../store/myCurrentOrder'
+import {
+  fetchMyCurrentOrder,
+  addToCart,
+  updateQtyInCart
+} from '../store/myCurrentOrder'
+
 import Reviews from './Reviews'
+import _find from 'lodash/find'
 
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleAddToCartButtonClick = this.handleAddToCartButtonClick.bind(this)
   }
   componentDidMount() {
     try {
       const productId = this.props.match.params.id
       console.log('component did mount')
       this.props.getProduct(productId)
+      this.props.fetchOrder()
     } catch (error) {
       console.error(error)
     }
   }
-  handleSubmit(e) {
-    e.preventDefault()
-    try {
-      const product = {
-        productId: this.props.match.params.id,
-        cartQuantity: 1
+
+  handleAddToCartButtonClick() {
+    const productId = this.props.match.params.id
+    if (this.props.createdOrder.length) {
+      const currentProductInCart = _find(this.props.createdOrder[0].products, {
+        id: +productId
+      })
+      if (currentProductInCart) {
+        currentProductInCart.order_product.cartQuantity++
+        this.props.updateQtyInCart(currentProductInCart)
+      } else {
+        this.props.addToCart(this.props.product)
       }
-      console.log('event', e)
-      // this.props.addToCart(product)
-    } catch (err) {
-      console.log(err)
+    } else {
+      //need to create a new order
     }
   }
+
   render() {
     const {product} = this.props.product
     console.log('product', product)
@@ -43,12 +55,12 @@ class SingleProduct extends React.Component {
           <h3> {product.price}</h3>
         </div>
         <p>{product.desciption}</p>
-        <img src={product.imageUrl} />
-        <button type="submit" onClick={this.handleSubmit}>
-          Add to Cart
-        </button>
+        <img src={product.imageUrl} style={{width: 300, height: 300}} />
         <Reviews productId={this.props.match.params.id} />
         {/* check if theres already an order add product id to order, if not create order, and add product id */}
+        <button type="button" onClick={this.handleAddToCartButtonClick}>
+          Add To Cart
+        </button>
       </div>
     ) : (
       <div>..Loading </div>
@@ -56,13 +68,20 @@ class SingleProduct extends React.Component {
   }
 }
 const mapState = state => {
-  return {product: state.product, order: state.order}
+  return {
+    product: state.product,
+    order: state.order,
+    createdOrder: state.createdOrder
+  }
 }
 
 const mapDispatch = dispatch => ({
   getProduct: id => dispatch(fetchSingleProduct(id)),
   updateOrder: id => dispatch(updateOrder(id)),
-  createOrder: id => dispatch(createOrder(id))
+  createOrder: id => dispatch(createOrder(id)),
+  fetchOrder: () => dispatch(fetchMyCurrentOrder()),
+  addToCart: product => dispatch(addToCart(product)),
+  updateQtyInCart: product => dispatch(updateQtyInCart(product))
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)

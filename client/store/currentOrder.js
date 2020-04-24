@@ -20,7 +20,7 @@ export const updateExistingOrder = id => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/products/${id}`)
-      dispatch(udpateOrder(data))
+      dispatch(updateOrder(data))
     } catch (err) {
       console.log(err)
     }
