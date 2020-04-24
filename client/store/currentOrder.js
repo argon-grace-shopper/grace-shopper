@@ -3,31 +3,31 @@ import axios from 'axios'
 const CREATE_ORDER = 'CREATE_ORDER'
 const UPDATE_ORDER = 'UPDATE_ORDER'
 
-export const createNewOrder = order => {
+export const createNewOrder = (order) => {
   return {
     type: CREATE_ORDER,
-    order
+    order,
   }
 }
-export const updateOrder = order => {
+export const updateOrder = (order) => {
   return {
     type: UPDATE_ORDER,
-    order
+    order,
   }
 }
 
-export const updateExistingOrder = id => {
-  return async dispatch => {
+export const updateExistingOrder = (id) => {
+  return async (dispatch) => {
     try {
       const {data} = await axios.get(`/api/products/${id}`)
-      dispatch(udpateOrder(data))
+      dispatch(updateOrder(data))
     } catch (err) {
       console.log(err)
     }
   }
 }
-export const createOrder = id => {
-  return async dispatch => {
+export const createOrder = (id) => {
+  return async (dispatch) => {
     try {
       const {data} = await axios.get(`/api/products/${id}`)
       dispatch(createNewOrder(data))
