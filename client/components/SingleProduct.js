@@ -13,7 +13,7 @@ import _find from 'lodash/find'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.handleBuyButtonClick = this.handleBuyButtonClick.bind(this)
+    this.handleAddToCartButtonClick = this.handleAddToCartButtonClick.bind(this)
   }
   componentDidMount() {
     try {
@@ -25,7 +25,7 @@ class SingleProduct extends React.Component {
       console.error(error)
     }
   }
-  handleBuyButtonClick() {
+  handleAddToCartButtonClick() {
     const productId = this.props.match.params.id
     if (this.props.createdOrder.length) {
       const currentProductInCart = _find(this.props.createdOrder[0].products, {
@@ -61,7 +61,7 @@ class SingleProduct extends React.Component {
           <p>Be the first to review this product!</p>
         )} */}
         {/* check if theres already an order add product id to order, if not create order, and add product id */}
-        <button type="button" onClick={this.handleBuyButtonClick}>
+        <button type="button" onClick={this.handleAddToCartButtonClick}>
           Add To Cart
         </button>
       </div>
