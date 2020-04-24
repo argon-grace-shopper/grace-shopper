@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 import {
   fetchMyCurrentOrder,
   deleteItemFromOrder,
@@ -59,8 +60,13 @@ export const Cart = (props) => {
           {props.createdOrder[0].products.map((product) => (
             <div key={product.id}>
               <span>
-                <img src={product.imageUrl} style={{width: 100, height: 100}} />
-                <p>{product.title}</p>
+                <Link to={`/products/${product.id}`}>
+                  <img
+                    src={product.imageUrl}
+                    style={{width: 100, height: 100}}
+                  />
+                  <p>{product.title}</p>
+                </Link>
                 <label htmlFor="qty">Qty:</label>
                 <select
                   id="qty"
