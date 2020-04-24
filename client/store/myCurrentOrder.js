@@ -4,17 +4,18 @@ const SET_CREATED_ORDER = 'GET_CREATED_ORDER'
 
 const initialValue = []
 
-const setCreatedOrder = createdOrder => {
+const setCreatedOrder = (createdOrder) => {
   return {
     type: SET_CREATED_ORDER,
-    createdOrder
+    createdOrder,
   }
 }
 
-export const fetchMyCurrentOrder = userId => {
-  return async dispatch => {
+export const fetchMyCurrentOrder = () => {
+  return async (dispatch) => {
     try {
-      const {data} = await axios.get(`/api/cart/${userId}`)
+      const {data} = await axios.get(`/api/cart`)
+      console.log(data)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
@@ -22,11 +23,11 @@ export const fetchMyCurrentOrder = userId => {
   }
 }
 
-export const deleteItemFromOrder = (order, product) => {
-  return async dispatch => {
+export const deleteItemFromOrder = (product) => {
+  return async (dispatch) => {
     try {
-      await axios.put(`/api/cart/remove-from-cart/${order[0].user.id}`, product)
-      const {data} = await axios.get(`/api/cart/${order[0].user.id}`)
+      await axios.put(`/api/cart/remove-from-cart/`, product)
+      const {data} = await axios.get(`/api/cart/`)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
@@ -34,11 +35,11 @@ export const deleteItemFromOrder = (order, product) => {
   }
 }
 
-export const updateQtyInCart = (order, product) => {
-  return async dispatch => {
+export const updateQtyInCart = (product) => {
+  return async (dispatch) => {
     try {
-      await axios.put(`/api/cart/update-qty/${order[0].user.id}`, product)
-      const {data} = await axios.get(`/api/cart/${order[0].user.id}`)
+      await axios.put(`/api/cart/update-qty/`, product)
+      const {data} = await axios.get(`/api/cart/`)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
@@ -46,11 +47,11 @@ export const updateQtyInCart = (order, product) => {
   }
 }
 
-export const addToCart = (order, product) => {
-  return async dispatch => {
+export const addToCart = (product) => {
+  return async (dispatch) => {
     try {
-      await axios.post(`/api/cart/add-to-cart/${order[0].user.id}`, product)
-      const {data} = await axios.get(`/api/cart/${order[0].user.id}`)
+      await axios.post(`/api/cart/add-to-cart/`, product)
+      const {data} = await axios.get(`/api/cart/`)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
