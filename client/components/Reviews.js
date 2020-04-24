@@ -45,6 +45,7 @@ export class Review extends React.Component {
   componentDidMount() {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
+    console.log('these are props', this.props)
     window.setTimeout(() => {
       if (this.props.user.myProducts.includes(this.props.productId)) {
         this.reviewFlag = true
@@ -57,7 +58,7 @@ export class Review extends React.Component {
     const productId = this.props.productId
     const userId = this.props.userId
 
-    console.log('heyyy', this.props.user.myProducts)
+    console.log(this.reviewFlag)
 
     return (
       <div className="reviews-container">
@@ -73,21 +74,20 @@ export class Review extends React.Component {
         ) : (
           <h3>No Reviews</h3>
         )}
-        {this.props.user.myProducts &&
-          this.reviewFlag && (
-            <div className="reviews-panel">
-              <h3>Add Review (100 word minimum)</h3>
-              <form onSubmit={this.handleSubmit}>
-                <input
-                  type="text"
-                  name="reviewBody"
-                  value={this.state.reviewBody}
-                  onChange={this.handleChange}
-                />
-                <button type="submit">Submit</button>
-              </form>
-            </div>
-          )}
+        {this.reviewFlag && (
+          <div className="reviews-panel">
+            <h3>Add Review (100 word minimum)</h3>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                name="reviewBody"
+                value={this.state.reviewBody}
+                onChange={this.handleChange}
+              />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        )}
       </div>
     )
   }
