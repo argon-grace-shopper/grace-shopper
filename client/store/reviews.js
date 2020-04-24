@@ -51,8 +51,9 @@ export default function reviewsReducer(state = initialState, action) {
     case SET_REVIEWS:
       return action.reviews
     case GOT_NEW_REVIEW: {
-      const reviews = [...state.reviews, action.review]
-      return {...state, reviews}
+      console.log('STATE!', state)
+      return [...state, action.review]
+      // return {...state, reviews}
     }
     default:
       return state
