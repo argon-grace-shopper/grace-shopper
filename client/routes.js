@@ -8,6 +8,9 @@ import {me} from './store'
 import Cart from './components/Cart'
 import AllProducts from './components/allProducts'
 import Reviews from './components/Reviews'
+import Checkout from './components/Checkout'
+import Success from './components/Success'
+import Canceled from './components/Canceled'
 
 /**
  * COMPONENT
@@ -22,19 +25,26 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-
+        {/* Routes placed here are available to all visitors  */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/products/:productId/reviews" component={Reviews} />
-
         <Route path="/products" component={AllProducts} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
+            <Route path="/success.html">
+              <Success />
+            </Route>
+            <Route path="/canceled.html">
+              <Canceled />
+            </Route>
+            <Route path="/checkout">
+              <Checkout />
+            </Route>
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

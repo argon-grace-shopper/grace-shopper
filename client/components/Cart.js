@@ -50,6 +50,19 @@ export const Cart = (props) => {
     props.updateQtyInCart(product)
   }
 
+  const handleCheckoutClick = async (event) => {
+    // Call your backend to create the Checkout session.
+    const {sessionId} = await fetchCheckoutSession()
+    // When the customer clicks on the button, redirect them to Checkout.
+    const stripe = await stripePromise
+    const {error} = await stripe.redirectToCheckout({
+      sessionId,
+    })
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
+  }
+
   return (
     <div>
       <h2>Shopping Cart</h2>
@@ -95,7 +108,9 @@ export const Cart = (props) => {
             </div>
           ))}
           <div>Subtotal: ${subTotal}</div>
-          <button type="button">Checkout</button>
+          <button type="button" role="link" onClick={handleCheckoutClick}>
+            Checkout
+          </button>
         </div>
       )}
     </div>
