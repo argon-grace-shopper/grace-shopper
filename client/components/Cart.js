@@ -6,7 +6,10 @@ import {
   updateQtyInCart,
 } from '../store/myCurrentOrder'
 import {connect} from 'react-redux'
+import {loadStripe} from '@stripe/stripe-js'
+import axios from 'axios'
 
+const stripePromise = loadStripe('pk_test_5MVbKAdVRzUv9UXxVVXWOiNM00zO1he2a0')
 const mapToProps = (state) => ({
   createdOrder: state.createdOrder,
 })
@@ -50,13 +53,28 @@ export const Cart = (props) => {
     props.updateQtyInCart(product)
   }
 
-  const handleCheckoutClick = async (event) => {
+  const stripeFormatOrderData = () => {
+    const stripeOrderData = props.createdOrder[0].products.map((product) => {
+      return {
+        name: product.title,
+        amount: product.price * 100,
+        currency: 'usd',
+        quantity: +product.order_product.cartQuantity,
+      }
+    })
+    return stripeOrderData
+  }
+
+  const handleCheckoutClick = async () => {
     // Call your backend to create the Checkout session.
-    const {sessionId} = await fetchCheckoutSession()
-    // When the customer clicks on the button, redirect them to Checkout.
     const stripe = await stripePromise
+    const sessionId = await axios.post(
+      '/stripe/create-checkout-session',
+      stripeFormatOrderData()
+    )
+    // When the customer clicks on the button, redirect them to Checkout.
     const {error} = await stripe.redirectToCheckout({
-      sessionId,
+      sessionId: sessionId.data,
     })
     // If `redirectToCheckout` fails due to a browser or network
     // error, display the localized error message to your customer
