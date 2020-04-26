@@ -4,12 +4,23 @@ const Order = require('../db/models/order')
 const Order_Product = require('../db/models/order_product')
 
 const findByUser = req => {
-  return {
-    where: {
-      userId: req.user.dataValues.id,
-      status: 'created'
-    },
-    include: {all: true}
+  if (req.user) {
+    return {
+      where: {
+        userId: req.user.dataValues.id,
+        status: 'created'
+      },
+      include: {all: true}
+    }
+  } else {
+    console.log('>>>>> req.session', req.session)
+    // return {
+    //   where: {
+    //     userId: req.session.id,
+    //     status: 'created'
+    //   },
+    //   include: {all: true}
+    // }
   }
 }
 
@@ -46,9 +57,19 @@ router.put('/update-qty/', async (req, res, next) => {
 
 router.post('/add-to-cart/', async (req, res, next) => {
   try {
-    const createdOrdersById = await Order.findAll(findByUser(req))
-    console.log(req.body)
+    console.log('>>>> req.user', req.user)
+    const createdOrdersById = await Order.findOrCreate({
+      where: {
+        userId: req.user.id,
+        status: 'created'
+      },
+      defaults: {
+        userId: req.user.id,
+        status: 'created'
+      }
+    })
     await createdOrdersById[0].addProduct(req.body.product.id)
+
     res.json(createdOrdersById[0])
   } catch (err) {
     next(err)

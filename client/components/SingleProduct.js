@@ -29,18 +29,14 @@ class SingleProduct extends React.Component {
 
   handleAddToCartButtonClick() {
     const productId = this.props.match.params.id
-    if (this.props.createdOrder.length) {
-      const currentProductInCart = _find(this.props.createdOrder[0].products, {
-        id: +productId
-      })
-      if (currentProductInCart) {
-        currentProductInCart.order_product.cartQuantity++
-        this.props.updateQtyInCart(currentProductInCart)
-      } else {
-        this.props.addToCart(this.props.product)
-      }
+    const currentProductInCart = _find(this.props.createdOrder[0].products, {
+      id: +productId
+    })
+    if (currentProductInCart) {
+      currentProductInCart.order_product.cartQuantity++
+      this.props.updateQtyInCart(currentProductInCart)
     } else {
-      //need to create a new order
+      this.props.addToCart(this.props.product)
     }
   }
 
