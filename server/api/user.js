@@ -3,12 +3,28 @@ const {Order, Product} = require('../db/models')
 
 module.exports = router
 
-router.get('/', async (req, res, next) => {
-  try {
-    res.send(req.user)
-  } catch (err) {
-    next(err)
-  }
+// router.get('/', async (req, res, next) => {
+//   try {
+//     res.send(req.user)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
+router.get('/', (req, res, next) => {
+  const user = req.user
+  const session = req.session
+
+  session.seshId = 6
+
+  // if (!session.cart) {
+  //   session.cart = 1
+  // } else {
+  //   session.cart++
+  // }
+  console.log('user', user)
+  // console.log('session', session)
+  res.json({user, session})
 })
 
 router.get('/orders', async (req, res, next) => {
