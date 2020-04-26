@@ -5,7 +5,7 @@ import {createOrder, updateOrder} from '../store/currentOrder'
 import {
   fetchMyCurrentOrder,
   addToCart,
-  updateQtyInCart
+  updateQtyInCart,
 } from '../store/myCurrentOrder'
 
 import Reviews from './Reviews'
@@ -29,18 +29,14 @@ class SingleProduct extends React.Component {
 
   handleAddToCartButtonClick() {
     const productId = this.props.match.params.id
-    if (this.props.createdOrder.length) {
-      const currentProductInCart = _find(this.props.createdOrder[0].products, {
-        id: +productId
-      })
-      if (currentProductInCart) {
-        currentProductInCart.order_product.cartQuantity++
-        this.props.updateQtyInCart(currentProductInCart)
-      } else {
-        this.props.addToCart(this.props.product)
-      }
+    const currentProductInCart = _find(this.props.createdOrder[0].products, {
+      id: +productId,
+    })
+    if (currentProductInCart) {
+      currentProductInCart.order_product.cartQuantity++
+      this.props.updateQtyInCart(currentProductInCart)
     } else {
-      //need to create a new order
+      this.props.addToCart(this.props.product)
     }
   }
 
@@ -67,21 +63,21 @@ class SingleProduct extends React.Component {
     )
   }
 }
-const mapState = state => {
+const mapState = (state) => {
   return {
     product: state.product,
     order: state.order,
-    createdOrder: state.createdOrder
+    createdOrder: state.createdOrder,
   }
 }
 
-const mapDispatch = dispatch => ({
-  getProduct: id => dispatch(fetchSingleProduct(id)),
-  updateOrder: id => dispatch(updateOrder(id)),
-  createOrder: id => dispatch(createOrder(id)),
+const mapDispatch = (dispatch) => ({
+  getProduct: (id) => dispatch(fetchSingleProduct(id)),
+  updateOrder: (id) => dispatch(updateOrder(id)),
+  createOrder: (id) => dispatch(createOrder(id)),
   fetchOrder: () => dispatch(fetchMyCurrentOrder()),
-  addToCart: product => dispatch(addToCart(product)),
-  updateQtyInCart: product => dispatch(updateQtyInCart(product))
+  addToCart: (product) => dispatch(addToCart(product)),
+  updateQtyInCart: (product) => dispatch(updateQtyInCart(product)),
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)
