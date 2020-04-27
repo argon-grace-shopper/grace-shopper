@@ -59,7 +59,7 @@ class SingleProduct extends React.Component {
         </button>
       </div>
     ) : (
-      <div>..Loading </div>
+      <div>...Loading </div>
     )
   }
 }

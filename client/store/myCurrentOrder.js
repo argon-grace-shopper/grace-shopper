@@ -4,18 +4,17 @@ const SET_CREATED_ORDER = 'GET_CREATED_ORDER'
 
 const initialValue = []
 
-const setCreatedOrder = createdOrder => {
+const setCreatedOrder = (createdOrder) => {
   return {
     type: SET_CREATED_ORDER,
-    createdOrder
+    createdOrder,
   }
 }
 
 export const fetchMyCurrentOrder = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const {data} = await axios.get(`/api/cart`)
-      console.log(data)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
@@ -23,8 +22,8 @@ export const fetchMyCurrentOrder = () => {
   }
 }
 
-export const deleteItemFromOrder = product => {
-  return async dispatch => {
+export const deleteItemFromOrder = (product) => {
+  return async (dispatch) => {
     try {
       await axios.put(`/api/cart/remove-from-cart/`, product)
       const {data} = await axios.get(`/api/cart/`)
@@ -35,8 +34,8 @@ export const deleteItemFromOrder = product => {
   }
 }
 
-export const updateQtyInCart = product => {
-  return async dispatch => {
+export const updateQtyInCart = (product) => {
+  return async (dispatch) => {
     try {
       await axios.put(`/api/cart/update-qty/`, product)
       const {data} = await axios.get(`/api/cart/`)
@@ -47,8 +46,8 @@ export const updateQtyInCart = product => {
   }
 }
 
-export const addToCart = product => {
-  return async dispatch => {
+export const addToCart = (product) => {
+  return async (dispatch) => {
     try {
       await axios.post(`/api/cart/add-to-cart/`, product)
       const {data} = await axios.get(`/api/cart/`)
