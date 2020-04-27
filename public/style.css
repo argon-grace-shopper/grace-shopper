@@ -20,9 +20,35 @@ form div {
   display: inline-block;
 }
 
-single-product {
+#sidebar {
+  background-color: #848c8e;
   display: flex;
+  flex-direction: column;
+  align-content: center;
 }
+
+#header {
+  background-color: #254d32;
+  color: #e8f1f2;
+}
+
+#footer {
+  background-color: #254d32;
+}
+
+.single-product {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 5% 20% 5% 20%;
+  background-color: white;
+}
+
+.single-product-info {
+  display: flex;
+  flex-direction: row;
+}
+
 .all-products-container {
   display: flex;
   flex-direction: row;
@@ -35,8 +61,7 @@ single-product {
 }
 
 .all-products-panel {
-  display: flex;
-  flex-direction: column;
+  align-content: center;
   width: 25%;
 }
 
@@ -44,9 +69,7 @@ single-product {
   max-width: 100%;
 }
 
-.sidebar {
-  background-color: cornflowerblue;
-  min-width: 20%;
-  display: flex;
-  flex-direction: column;
+.add-button {
+  width: 50%;
+  margin: 0 25% 0 25%;
 }

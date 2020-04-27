@@ -10,13 +10,13 @@ export class Review extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
-      reviewBody: ''
+      reviewBody: '',
     }
   }
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
@@ -27,17 +27,17 @@ export class Review extends React.Component {
       const review = {
         description: this.state.reviewBody,
         productId: this.props.productId,
-        userId: 1
+        userId: 1,
       }
       this.props.postReview(review, this.props.productId)
       this.setState({
-        reviewBody: ''
+        reviewBody: '',
       })
       this.props.getReviews(this.props.productId)
     } catch (err) {
       console.log(err)
       this.setState({
-        reviewBody: ''
+        reviewBody: '',
       })
     }
   }
@@ -45,12 +45,6 @@ export class Review extends React.Component {
   componentDidMount() {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
-    console.log('these are props', this.props)
-    // window.setTimeout(() => {
-    //   if (this.props.user.myProducts.includes(this.props.productId)) {
-    //     this.reviewFlag = true
-    //   }
-    // }, 2000)
   }
 
   render() {
@@ -67,8 +61,8 @@ export class Review extends React.Component {
 
     return (
       <div className="reviews-container">
-        {reviews ? (
-          reviews.map(review => {
+        {reviews.length > 0 ? (
+          reviews.map((review) => {
             return (
               <div key={review.id} className="reviews-panel">
                 <p>{review.description}</p>
@@ -77,7 +71,7 @@ export class Review extends React.Component {
             )
           })
         ) : (
-          <h3>No Reviews</h3>
+          <p>No Reviews</p>
         )}
         {this.reviewFlag && (
           <div className="reviews-panel">
@@ -98,18 +92,18 @@ export class Review extends React.Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
     reviews: state.reviews,
-    purchasedProducts: state.user.myProducts
+    purchasedProducts: state.user.myProducts,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    getReviews: productId => dispatch(fetchReviews(productId)),
+    getReviews: (productId) => dispatch(fetchReviews(productId)),
     postReview: (review, productId) => dispatch(postReview(review, productId)),
-    getMyProducts: () => dispatch(fetchMyProducts())
+    getMyProducts: () => dispatch(fetchMyProducts()),
   }
 }
 
