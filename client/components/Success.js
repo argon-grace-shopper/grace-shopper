@@ -1,69 +1,52 @@
-import React, {useState, useEffect} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {Link} from 'react-router-dom'
+import {
+  fetchMyCurrentOrder,
+  saveCheckoutPrice,
+  updateOrderStatus,
+  updateInventoryQuantity,
+} from '../store/myCurrentOrder'
 
-const Success = () => {
-  const [session, setSession] = useState({})
-  const location = useLocation()
-  const sessionId = location.search.replace('?session_id=', '')
+import {connect} from 'react-redux'
+
+const mapToProps = (state) => ({
+  createdOrder: state.createdOrder,
+})
+
+const dispatchToProps = (dispatch) => {
+  return {
+    getMyCurrentOrder: () => dispatch(fetchMyCurrentOrder()),
+    saveCheckoutPrice: (product, orderId) =>
+      dispatch(saveCheckoutPrice(product, orderId)),
+    updateOrderStatus: (orderId) => dispatch(updateOrderStatus(orderId)),
+    updateInventoryQuantity: (productId, newInventoryQuantity) =>
+      dispatch(updateInventoryQuantity(productId, newInventoryQuantity)),
+  }
+}
+const Success = (props) => {
+  useEffect(() => {
+    props.getMyCurrentOrder()
+  }, [])
 
   useEffect(() => {
-    async function fetchSession() {
-      setSession(
-        await fetch('/checkout-session?sessionId=' + sessionId).then((res) =>
-          res.json()
+    if (props.createdOrder.length) {
+      props.createdOrder[0].products.forEach((product) => {
+        props.saveCheckoutPrice(product, props.createdOrder[0].id)
+        props.updateInventoryQuantity(
+          product.id,
+          product.inventoryQuantity - product.order_product.cartQuantity
         )
-      )
+      })
+      props.updateOrderStatus(props.createdOrder[0].id)
     }
-    fetchSession()
-  }, [sessionId])
+  }, [props.createdOrder])
 
   return (
-    <div className="sr-root">
-      <div className="sr-main">
-        <header className="sr-header">
-          <div className="sr-header__logo"></div>
-        </header>
-        <div className="sr-payment-summary completed-view">
-          <h1>Your payment succeeded</h1>
-          <h4>View CheckoutSession response:</h4>
-        </div>
-        <div className="sr-section completed-view">
-          <div className="sr-callout">
-            <pre>{JSON.stringify(session, null, 2)}</pre>
-          </div>
-          <Link to="/">Restart demo</Link>
-        </div>
-      </div>
-      <div className="sr-content">
-        <div className="pasha-image-stack">
-          <img
-            alt=""
-            src="https://picsum.photos/280/320?random=1"
-            width="140"
-            height="160"
-          />
-          <img
-            alt=""
-            src="https://picsum.photos/280/320?random=2"
-            width="140"
-            height="160"
-          />
-          <img
-            alt=""
-            src="https://picsum.photos/280/320?random=3"
-            width="140"
-            height="160"
-          />
-          <img
-            alt=""
-            src="https://picsum.photos/280/320?random=4"
-            width="140"
-            height="160"
-          />
-        </div>
-      </div>
+    <div>
+      <h1>Success! Your payment has been processed!</h1>
+      <Link to="/products">Continue shopping</Link>
     </div>
   )
 }
 
-export default Success
+export default connect(mapToProps, dispatchToProps)(Success)

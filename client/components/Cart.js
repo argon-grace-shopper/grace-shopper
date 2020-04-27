@@ -16,7 +16,7 @@ const mapToProps = (state) => ({
 
 const dispatchToProps = (dispatch) => {
   return {
-    getMyCurrentOrder: (userId) => dispatch(fetchMyCurrentOrder(userId)),
+    getMyCurrentOrder: () => dispatch(fetchMyCurrentOrder()),
     deleteItemFromOrder: (order, product) =>
       dispatch(deleteItemFromOrder(order, product)),
     updateQtyInCart: (order, product) =>
@@ -26,6 +26,7 @@ const dispatchToProps = (dispatch) => {
 
 export const Cart = (props) => {
   const [subTotal, setSubTotal] = useState()
+  const [errorMessage, setErrorMessage] = useState()
 
   const subtotalCalc = () => {
     if (props.createdOrder.length > 0) {
@@ -66,19 +67,17 @@ export const Cart = (props) => {
   }
 
   const handleCheckoutClick = async () => {
-    // Call your backend to create the Checkout session.
     const stripe = await stripePromise
     const sessionId = await axios.post(
       '/stripe/create-checkout-session',
       stripeFormatOrderData()
     )
-    // When the customer clicks on the button, redirect them to Checkout.
     const {error} = await stripe.redirectToCheckout({
       sessionId: sessionId.data,
     })
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
+    if (error) {
+      setErrorMessage(error.message)
+    }
   }
 
   return (
@@ -86,6 +85,8 @@ export const Cart = (props) => {
       <h2>Shopping Cart</h2>
       {!props.createdOrder.length ? (
         <h4> There is nothing in the cart</h4>
+      ) : errorMessage ? (
+        <div>{errorMessage}</div>
       ) : (
         <div>
           {props.createdOrder[0].products.map((product) => (
@@ -110,6 +111,7 @@ export const Cart = (props) => {
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
+                <div>{product.inventoryQuantity} items in stock</div>
                 <p>
                   $
                   {(product.price * product.order_product.cartQuantity).toFixed(

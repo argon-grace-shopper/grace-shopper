@@ -59,6 +59,42 @@ export const addToCart = (product) => {
   }
 }
 
+export const saveCheckoutPrice = (product, orderId) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/cart/save-checkout-price`, {
+        product: product,
+        orderId: orderId,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const updateOrderStatus = (orderId) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/cart/order-status-update`, {orderId})
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const updateInventoryQuantity = (productId, newInventoryQuantity) => {
+  return async (dispatch) => {
+    try {
+      await axios.put('/api/cart/update-product-inventory', {
+        productId: productId,
+        newInventoryQuantity: newInventoryQuantity,
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export default function createdOrderReducer(state = initialValue, action) {
   switch (action.type) {
     case SET_CREATED_ORDER:
