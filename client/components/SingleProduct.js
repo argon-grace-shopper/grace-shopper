@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import productReducer, {fetchSingleProduct} from '../store/product'
-import orderReducer, {createOrder, updateOrder} from '../store/currentOrder'
+import {fetchSingleProduct} from '../store/product'
+import {createOrder, updateOrder} from '../store/currentOrder'
 import {
   fetchMyCurrentOrder,
   addToCart,

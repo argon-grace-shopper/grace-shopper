@@ -8,6 +8,10 @@ import {me} from './store'
 import Cart from './components/Cart'
 import AllProducts from './components/allProducts'
 import Reviews from './components/Reviews'
+import AdminMain from './components/AdminMain'
+import AdminProducts from './components/AdminProducts'
+import AdminOrders from './components/AdminOrders'
+import AdminUsers from './components/AdminUsers'
 
 /**
  * COMPONENT
@@ -35,6 +39,10 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/admin" component={AdminMain} />
+            <Route exact path="/admin/products" component={AdminProducts} />
+            <Route exact path="/admin/orders" component={AdminOrders} />
+            <Route exact path="/admin/users" component={AdminUsers} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
