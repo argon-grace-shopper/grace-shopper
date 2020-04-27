@@ -46,11 +46,11 @@ export class Review extends React.Component {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
     console.log('these are props', this.props)
-    window.setTimeout(() => {
-      if (this.props.user.myProducts.includes(this.props.productId)) {
-        this.reviewFlag = true
-      }
-    }, 2000)
+    // window.setTimeout(() => {
+    //   if (this.props.user.myProducts.includes(this.props.productId)) {
+    //     this.reviewFlag = true
+    //   }
+    // }, 2000)
   }
 
   render() {
@@ -58,7 +58,12 @@ export class Review extends React.Component {
     const productId = this.props.productId
     const userId = this.props.userId
 
-    console.log(this.reviewFlag)
+    if (
+      this.props.purchasedProducts &&
+      this.props.purchasedProducts.includes(parseInt(productId))
+    ) {
+      this.reviewFlag = true
+    }
 
     return (
       <div className="reviews-container">
@@ -96,7 +101,7 @@ export class Review extends React.Component {
 const mapState = state => {
   return {
     reviews: state.reviews,
-    user: state.user
+    purchasedProducts: state.user.myProducts
   }
 }
 
