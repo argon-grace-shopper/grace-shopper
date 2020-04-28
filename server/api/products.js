@@ -5,7 +5,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: Category
+      include: Category,
     })
     res.send(products)
   } catch (err) {
@@ -15,14 +15,14 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Product.create(req.body)
-    .then(product => res.send(product))
+    .then((product) => res.send(product))
     .catch(next)
 })
 
 router.get('/:productId', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId, {
-      include: Order
+      include: Order,
     })
     res.json(product)
   } catch (err) {
@@ -42,14 +42,14 @@ router.get('/:productId/reviews', async (req, res, next) => {
 
 router.post('/:productId/reviews', (req, res, next) => {
   Review.create(req.body)
-    .then(review => res.send(review))
+    .then((review) => res.send(review))
     .catch(next)
 })
 
 router.put('/:productId', (req, res, next) => {
   Product.findByPk(req.params.productId)
-    .then(product => product.update(req.body))
-    .then(product => res.send(product))
+    .then((product) => product.update(req.body))
+    .then((product) => res.send(product))
     .catch(next)
 })
 
