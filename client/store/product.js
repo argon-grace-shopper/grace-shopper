@@ -42,6 +42,14 @@ export const fetchUpdateProduct = (product) => async (dispatch) => {
     console.log(err)
   }
 }
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    const {data: deleteProduct} = await axios.delete(`/api/products/${id}`)
+    dispatch(getSingleProduct(deleteProduct))
+  } catch (err) {
+    console.log(err)
+  }
+}
 // export const deleteProduct = product => async (dispatch, getState) => {
 //     try {
 //       const { data: deleteProduct } = await Axios.delete(

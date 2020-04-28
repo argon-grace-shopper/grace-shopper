@@ -1,12 +1,17 @@
 import React from 'react'
 import {fetchAllProducts} from '../store/products'
-import {fetchSingleProduct, fetchUpdateProduct} from '../store/product'
+import {
+  fetchSingleProduct,
+  fetchUpdateProduct,
+  deleteProduct,
+} from '../store/product'
 import {connect} from 'react-redux'
 class AdminProducts extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
   componentDidMount() {
     this.props.getAllProducts()
@@ -30,6 +35,11 @@ class AdminProducts extends React.Component {
       }
     }
     this.props.getUpdatedProduct(product)
+  }
+  handleDelete(e) {
+    e.preventDefault()
+    let id = e.target.value
+    this.props.deleteSingleProduct(id)
   }
   render() {
     const products = this.props.products
@@ -57,7 +67,13 @@ class AdminProducts extends React.Component {
               src={this.props.product.product.imageUrl}
               style={{width: 300, height: 300}}
             />
-
+            <h3>Delete Plant</h3>
+            <button
+              value={this.props.product.product.id}
+              onClick={this.handleDelete}
+            >
+              Delete
+            </button>
             <form method="post" id="edit-product" onSubmit={this.handleSubmit}>
               <div className="form">
                 <h3> Edit Plant</h3>
@@ -114,6 +130,7 @@ const mapDispatch = (dispatch) => ({
   getAllProducts: () => dispatch(fetchAllProducts()),
   getSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
   getUpdatedProduct: (product) => dispatch(fetchUpdateProduct(product)),
+  deleteSingleProduct: (id) => dispatch(deleteProduct(id)),
 })
 
 export default connect(mapState, mapDispatch)(AdminProducts)
