@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
-import {Layout, Table, Button} from 'antd'
+import {Layout, Table, Button, Tabs} from 'antd'
 import {fetchMyOrders} from '../store'
+import {ProfileFilled, SettingFilled} from '@ant-design/icons'
 
 const {Header, Content, Footer} = Layout
+const {TabPane} = Tabs
 
 /**
  * COMPONENT
@@ -38,22 +40,33 @@ export const UserHome = (props) => {
   ]
 
   const dataCalc = () => {
-    if (props.myOrders > 0) {
+    if (props.myOrders) {
       let table = []
       props.myOrders.forEach((order) => {
         if (order.status !== 'created') {
           table.push({
-            Key: order.id,
-            Status: order.status,
-            Date: order.updatedAt,
-            Total: order.products
+            key: order.id,
+            status: order.status,
+            date: order.updatedAt.slice(0, 10),
+            total:
+              '$ ' +
+              Number.parseFloat(
+                order.products
+                  .map(
+                    (product) =>
+                      product.order_product.cartQuantity *
+                      Number(product.order_product.checkoutPrice)
+                  )
+                  .reduce((accum, currVal) => accum + currVal)
+              ).toFixed(2),
+            items: order.products
               .map((product) => product.order_product.cartQuantity)
               .reduce((accum, currVal) => accum + currVal),
-            Items: 2,
           })
         }
       })
-      setData(tableData)
+
+      setData(table)
     }
   }
 
@@ -65,40 +78,39 @@ export const UserHome = (props) => {
     dataCalc()
   }, [props.myOrders])
 
-  const dataSource = [
-    {
-      key: '1',
-      status: 'Processed',
-      date: 'July 4',
-      total: 100,
-      items: 2,
-    },
-    {
-      key: '2',
-      status: 'Processed',
-      date: 'July 4',
-      total: 100,
-      items: 2,
-    },
-    {
-      key: '3',
-      status: 'Processed',
-      date: 'July 4',
-      total: 100,
-      items: 2,
-    },
-  ]
-
+  console.log('look', tableData)
   return (
     <div className="center">
       <Layout>
         <Header id="header">
-          <h2>MY ACCOUNT</h2>
+          <h2>Your Account</h2>
         </Header>
-        <Content>
-          <h3>Welcome, {email}</h3>
-          <Button type="primary">Sign Out</Button>
-          <Table dataSource={dataSource} columns={columns} />
+        <Content id="content">
+          <Tabs defaultActiveKey="1">
+            <TabPane
+              tab={
+                <span>
+                  <SettingFilled />
+                  Settings
+                </span>
+              }
+              key="1"
+            >
+              <h3>Hi, {email}! </h3>
+              <Button type="primary">Sign Out</Button>
+            </TabPane>
+            <TabPane
+              tab={
+                <span>
+                  <ProfileFilled />
+                  Past Orders
+                </span>
+              }
+              key="2"
+            >
+              <Table dataSource={tableData} columns={columns} />
+            </TabPane>
+          </Tabs>
         </Content>
         <Footer id="footer"></Footer>
       </Layout>
@@ -112,7 +124,7 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     email: state.user.email,
-    myOrders: state.myOrders,
+    myOrders: state.user.myOrders,
   }
 }
 

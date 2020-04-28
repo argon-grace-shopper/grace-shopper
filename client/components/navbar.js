@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {ShoppingFilled} from '@ant-design/icons'
-import {Badge} from 'antd'
+import {ShoppingFilled, SettingFilled} from '@ant-design/icons'
+import {Badge, Popover} from 'antd'
 import {fetchMyCurrentOrder} from '../store/myCurrentOrder'
-
 
 export const Navbar = (props) => {
   const [cart, setCart] = useState()
@@ -20,6 +19,18 @@ export const Navbar = (props) => {
       setCart(total)
     }
   }
+
+  const guestCartCalc = () => {
+    if (props.createdOrder.length > 0) {
+      let total = 0
+      props.createdOrder[0].products.forEach((product) => {
+        total += product.order_product.cartQuantity
+      })
+      setCart(total)
+    }
+  }
+
+  // if (props.isLoggedIn) {
   useEffect(() => {
     props.getMyCurrentOrder()
   }, [])
@@ -27,6 +38,35 @@ export const Navbar = (props) => {
   useEffect(() => {
     cartCalc()
   }, [props.createdOrder])
+  // } else {
+  //   useEffect(() => {
+  //     props.getMyCurrentOrder()
+  //   }, [])
+
+  //   useEffect(() => {
+  //     guestCartCalc()
+  //   }, [props.createdOrder])
+  // }
+
+  const content = props.isLoggedIn ? (
+    <div>
+      <a href="/account">
+        <p>Your Account</p>
+      </a>
+      <a href="#" onClick={props.handleClick}>
+        <p>Log Out</p>
+      </a>
+    </div>
+  ) : (
+    <div>
+      <Link to="/login">
+        <p>Log In</p>
+      </Link>
+      <Link to="/signup">
+        <p>Sign Up</p>
+      </Link>
+    </div>
+  )
 
   return (
     <div id="nav-container">
@@ -34,32 +74,28 @@ export const Navbar = (props) => {
         <h1>Plant Store</h1>
       </a>
       <nav>
-        {props.isLoggedIn ? (
+        <div className="nav">
+          {/* The navbar will show these links after you log in */}
+
+          <Link to="/products">Products</Link>
           <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <Link to="/products">Products</Link>
-            <a href="#" onClick={props.handleClick}>
-              Logout
-            </a>
+            <Popover placement="bottomRight" content={content}>
+              <a>
+                <SettingFilled style={{fontSize: '30px'}} />
+              </a>
+            </Popover>
+
             <a href="/cart">
               <Badge count={cart}>
                 <ShoppingFilled style={{fontSize: '30px'}} />
               </Badge>
             </a>
           </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        )}
+        </div>
       </nav>
     </div>
   )
 }
-
 
 /**
  * CONTAINER
