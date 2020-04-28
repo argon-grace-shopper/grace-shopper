@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 import {loadStripe} from '@stripe/stripe-js'
 import axios from 'axios'
 import {Button} from 'antd'
-import {green} from '@ant-design/colors'
 
 const stripePromise = loadStripe('pk_test_5MVbKAdVRzUv9UXxVVXWOiNM00zO1he2a0')
 const mapToProps = (state) => ({
