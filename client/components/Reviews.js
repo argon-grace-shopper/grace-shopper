@@ -46,12 +46,18 @@ export class Review extends React.Component {
   componentDidMount() {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
+
+
+    // if (this.props.user.myProducts.includes(this.props.productId)) {
+    // 	this.reviewFlag = true;
+    // }
   }
 
   render() {
     const reviews = this.props.reviews
     const productId = this.props.productId
     const userId = this.props.userId
+
 
     if (
       this.props.purchasedProducts &&
@@ -99,6 +105,7 @@ const mapState = (state) => {
   return {
     reviews: state.reviews,
     purchasedProducts: state.user.myProducts,
+    user: state.user,
   }
 }
 

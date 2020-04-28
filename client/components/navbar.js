@@ -7,6 +7,7 @@ import {ShoppingFilled} from '@ant-design/icons'
 import {Badge} from 'antd'
 import {fetchMyCurrentOrder} from '../store/myCurrentOrder'
 
+
 export const Navbar = (props) => {
   const [cart, setCart] = useState()
 
@@ -59,12 +60,14 @@ export const Navbar = (props) => {
   )
 }
 
+
 /**
  * CONTAINER
  */
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+
     createdOrder: state.createdOrder,
   }
 }

@@ -24,7 +24,6 @@ class SingleProduct extends React.Component {
   componentDidMount() {
     try {
       const productId = this.props.match.params.id
-      console.log('component did mount')
       this.props.getProduct(productId)
       this.props.fetchOrder()
     } catch (error) {
@@ -47,6 +46,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const {product} = this.props.product
+
     console.log('hiii', product)
 
     return product ? (
@@ -97,7 +97,7 @@ class SingleProduct extends React.Component {
         <Footer id="footer">Footer</Footer>
       </Layout>
     ) : (
-      <div>..Loading </div>
+      <div>...Loading </div>
     )
   }
 }
