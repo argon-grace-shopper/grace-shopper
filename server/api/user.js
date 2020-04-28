@@ -4,23 +4,29 @@ const {checkIsLoggedIn} = require('./security')
 
 module.exports = router
 
-router.get('/', async (req, res, next) => {
-  try {
-    res.send(req.user)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/orders', checkIsLoggedIn, async (req, res, next) => {
+router.get('/completeOrders', checkIsLoggedIn, async (req, res, next) => {
   try {
     req.user.orders = await Order.findAll({
       where: {userId: req.user.id, status: 'complete'},
       include: {model: Product},
     })
-    const orders = req.user.orders
+    const completeOrders = req.user.orders
 
-    res.send(orders)
+    res.send(completeOrders)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/allOrders', checkIsLoggedIn, async (req, res, next) => {
+  try {
+    req.user.orders = await Order.findAll({
+      where: {userId: req.user.id},
+      include: {model: Product},
+    })
+    const allOrders = req.user.orders
+
+    res.send(allOrders)
   } catch (err) {
     next(err)
   }

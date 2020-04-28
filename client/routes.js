@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup} from './components'
+import UserHome from './components/user-home'
 import SingleProduct from './components/SingleProduct'
 import {me} from './store'
 import Cart from './components/Cart'
@@ -36,7 +37,8 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route exact path="/home" component={UserHome} />
+            <Route exact path="/account" component={UserHome} />
+            <Route exact path="/cart" component={Cart} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

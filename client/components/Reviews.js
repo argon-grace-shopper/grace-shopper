@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchReviews, postReview} from '../store/reviews'
 import {fetchMyProducts} from '../store/user'
+import {Button} from 'antd'
 
 export class Review extends React.Component {
   constructor() {
@@ -46,6 +47,7 @@ export class Review extends React.Component {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
 
+
     // if (this.props.user.myProducts.includes(this.props.productId)) {
     // 	this.reviewFlag = true;
     // }
@@ -56,9 +58,17 @@ export class Review extends React.Component {
     const productId = this.props.productId
     const userId = this.props.userId
 
+
+    if (
+      this.props.purchasedProducts &&
+      this.props.purchasedProducts.includes(parseInt(productId))
+    ) {
+      this.reviewFlag = true
+    }
+
     return (
       <div className="reviews-container">
-        {reviews ? (
+        {reviews.length > 0 ? (
           reviews.map((review) => {
             return (
               <div key={review.id} className="reviews-panel">
@@ -68,7 +78,7 @@ export class Review extends React.Component {
             )
           })
         ) : (
-          <h3>No Reviews</h3>
+          <p>No Reviews</p>
         )}
         {this.reviewFlag && (
           <div className="reviews-panel">
@@ -80,7 +90,9 @@ export class Review extends React.Component {
                 value={this.state.reviewBody}
                 onChange={this.handleChange}
               />
-              <button type="submit">Submit</button>
+              <Button size="small" type="submit">
+                Submit
+              </Button>
             </form>
           </div>
         )}
@@ -92,6 +104,7 @@ export class Review extends React.Component {
 const mapState = (state) => {
   return {
     reviews: state.reviews,
+    purchasedProducts: state.user.myProducts,
     user: state.user,
   }
 }
