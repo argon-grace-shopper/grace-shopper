@@ -1,6 +1,7 @@
 const router = require('express').Router()
 module.exports = router
 const {Order, Product} = require('../db/models')
+const Order_Product = require('../db/models/order_product')
 
 const findByUser = (req) => {
   if (req.user) {
@@ -31,7 +32,14 @@ const getGuestCart = async (req) => {
     const productObj = await Product.findByPk(prodId)
     const product = productObj.dataValues
     // eslint-disable-next-line camelcase
-    product.order_product = {
+    product.
+      
+      
+      
+      
+      
+      
+      = {
       cartQuantity: req.session.cart[prodId],
     }
     productAry.push(product)
@@ -47,7 +55,6 @@ const getGuestCart = async (req) => {
   return output
 }
 
-//get items in the cart for the current user
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
@@ -62,7 +69,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.put('/remove-from-cart/', async (req, res, next) => {
+router.put('/remove-from-cart', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
     await createdOrdersById[0].removeProduct(req.body.id)
@@ -72,7 +79,7 @@ router.put('/remove-from-cart/', async (req, res, next) => {
   }
 })
 
-router.put('/update-qty/', async (req, res, next) => {
+router.put('/update-qty', async (req, res, next) => {
   try {
     if (req.user) {
       const createdOrdersById = await Order.findAll(findByUser(req))
@@ -90,7 +97,7 @@ router.put('/update-qty/', async (req, res, next) => {
   }
 })
 
-router.post('/add-to-cart/', async (req, res, next) => {
+router.post('/add-to-cart', async (req, res, next) => {
   try {
     if (req.user) {
       const createdOrdersById = await Order.findOrCreate({
@@ -128,6 +135,60 @@ router.post('/add-to-cart/', async (req, res, next) => {
 
       res.json(guestCart[0])
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/save-checkout-price', async (req, res, next) => {
+  try {
+    await Order_Product.update(
+      {
+        checkoutPrice: req.body.product.price,
+      },
+      {
+        where: {
+          orderId: req.body.orderId,
+          productId: req.body.product.id,
+        },
+      }
+    )
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/order-status-update', async (req, res, next) => {
+  try {
+    await Order.update(
+      {
+        status: 'processing',
+      },
+      {
+        where: {
+          id: req.body.orderId,
+        },
+      }
+    )
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/update-product-inventory', async (req, res, next) => {
+  try {
+    await Product.update(
+      {
+        inventoryQuantity: req.body.newInventoryQuantity,
+      },
+      {
+        where: {
+          id: req.body.productId,
+        },
+      }
+    )
   } catch (err) {
     next(err)
   }

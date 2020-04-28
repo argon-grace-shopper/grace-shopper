@@ -8,6 +8,8 @@ import {me} from './store'
 import Cart from './components/Cart'
 import AllProducts from './components/allProducts'
 import Reviews from './components/Reviews'
+import Success from './components/Success'
+import Canceled from './components/Canceled'
 
 /**
  * COMPONENT
@@ -22,15 +24,15 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-
+        {/* Routes placed here are available to all visitors  */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/products/:productId/reviews" component={Reviews} />
+        <Route path="/products" component={AllProducts} />{' '}
         <Route exact path="/cart" component={Cart} />
-
-        <Route path="/products" component={AllProducts} />
+        <Route path="/success" component={Success} />
+        <Route path="/canceled" component={Canceled} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
