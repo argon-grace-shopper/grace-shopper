@@ -26,10 +26,11 @@ const getGuestCart = async (req) => {
   const productIdAry = Object.keys(req.session.cart)
   const productAry = []
 
-  for (i in productIdAry) {
+  for (let i = 0; i < productIdAry.length; i++) {
     const prodId = productIdAry[i]
     const productObj = await Product.findByPk(prodId)
     const product = productObj.dataValues
+    // eslint-disable-next-line camelcase
     product.order_product = {
       cartQuantity: req.session.cart[prodId],
     }
