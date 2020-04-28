@@ -79,58 +79,83 @@ export const Cart = (props) => {
       setErrorMessage(error.message)
     }
   }
-
+  console.log(props)
   return (
-    <div>
+    <div className="cart-container">
       <h2>Shopping Cart</h2>
-      {!props.createdOrder.length ? (
+      {!props.createdOrder.length || !props.createdOrder[0].products.length ? (
         <h4> There is nothing in the cart</h4>
       ) : errorMessage ? (
         <div>{errorMessage}</div>
       ) : (
         <div>
           {props.createdOrder[0].products.map((product) => (
-            <div key={product.id}>
-              <span>
-                <Link to={`/products/${product.id}`}>
+            <div key={product.id} className="item">
+              <div className="cart-item-container">
+                <div className="image-stock-info">
                   <img
                     src={product.imageUrl}
-                    style={{width: 100, height: 100}}
+                    style={{width: 150, height: 150}}
                   />
-                  <p>{product.title}</p>
-                </Link>
-                <label htmlFor="qty">Qty:</label>
-                <select
-                  id="qty"
-                  defaultValue={product.order_product.cartQuantity}
-                  onChange={(e) => handleChangeQty(e, product)}
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-                <div>{product.inventoryQuantity} items in stock</div>
-                <p>
-                  $
-                  {(product.price * product.order_product.cartQuantity).toFixed(
-                    2
-                  )}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteFromCart(product)}
-                >
-                  Remove
-                </button>{' '}
-              </span>
+                </div>
+                <div>
+                  <Link to={`/products/${product.id}`}>
+                    <h3>{product.title}</h3>
+                  </Link>
+
+                  <div>
+                    <label htmlFor="qty">Qty:</label>
+                    <select
+                      id="qty"
+                      defaultValue={product.order_product.cartQuantity}
+                      onChange={(e) => handleChangeQty(e, product)}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <div>
+                    <p>
+                      $
+                      {(
+                        product.price * product.order_product.cartQuantity
+                      ).toFixed(2)}
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteFromCart(product)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {product.inventoryQuantity - product.order_product.cartQuantity <
+                0 && (
+                <div>
+                  <div className="not-enough-stock">
+                    Only {product.inventoryQuantity} item(s) left in stock
+                  </div>
+                  <div className="not-enough-stock">
+                    Please adjust the qty or delete the item from cart
+                  </div>
+                </div>
+              )}
             </div>
           ))}
-          <div>Subtotal: ${subTotal}</div>
-          <button type="button" role="link" onClick={handleCheckoutClick}>
-            Checkout
-          </button>
+          <div className="subtotal-checkout ">
+            <div className="subtotal">Subtotal: ${subTotal}</div>
+            <div>
+              <button type="button" role="link" onClick={handleCheckoutClick}>
+                Checkout
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -48,7 +48,6 @@ router.put('/update-qty', async (req, res, next) => {
 router.post('/add-to-cart', async (req, res, next) => {
   try {
     const createdOrdersById = await Order.findAll(findByUser(req))
-    console.log(req.body)
     await createdOrdersById[0].addProduct(req.body.product.id)
     res.json(createdOrdersById[0])
   } catch (err) {
@@ -95,7 +94,6 @@ router.put('/order-status-update', async (req, res, next) => {
 
 router.put('/update-product-inventory', async (req, res, next) => {
   try {
-    console.log(req.body)
     await Product.update(
       {
         inventoryQuantity: req.body.newInventoryQuantity,
