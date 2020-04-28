@@ -1,5 +1,5 @@
 .app {
-  width: 960px;
+  /* width: 960px; */
   margin: auto;
   background-color: #e8f1f2;
 }
@@ -17,6 +17,12 @@ label {
 
 #nav-container {
   background-color: #254d32;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
 }
 
 nav a {
@@ -46,12 +52,24 @@ hr {
   text-align: center;
 }
 
+.landing {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 2.5% 0 2.5% 0;
+}
+
 #sidebar {
   background-color: white;
   display: flex;
   flex-direction: column;
   align-content: center;
   min-height: 600px;
+}
+
+#content {
+  min-height: 300px;
 }
 
 #header {
