@@ -28,7 +28,7 @@ const dispatchToProps = (dispatch) => {
 export const Cart = (props) => {
   const [subTotal, setSubTotal] = useState()
   const [errorMessage, setErrorMessage] = useState()
-  const [disbleSumbit, setDisableSubmit] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const subtotalCalc = () => {
     if (props.createdOrder.length > 0) {
@@ -39,6 +39,22 @@ export const Cart = (props) => {
       setSubTotal(total.toFixed(2))
     }
   }
+
+  const checkInventory = () => {
+    if (props.createdOrder.length) {
+      const result = props.createdOrder[0].products.some((product) => {
+        return (
+          product.inventoryQuantity - product.order_product.cartQuantity < 0
+        )
+      })
+      setIsDisabled(result)
+    }
+  }
+
+  useEffect(() => {
+    checkInventory()
+  }, [props.createdOrder])
+
   useEffect(() => {
     props.getMyCurrentOrder()
   }, [])
@@ -159,7 +175,7 @@ export const Cart = (props) => {
               <Button
                 type="primary"
                 role="link"
-                disabled={disbleSumbit}
+                disabled={isDisabled}
                 onClick={handleCheckoutClick}
                 style={{backgroundColor: '#254D32', borderColor: '#254D32'}}
               >
