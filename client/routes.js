@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup} from './components'
+import UserHome from './components/user-home'
 import SingleProduct from './components/SingleProduct'
 import {me} from './store'
 import Cart from './components/Cart'
@@ -12,6 +13,8 @@ import AdminMain from './components/AdminMain'
 import AdminProducts from './components/AdminProducts'
 import AdminOrders from './components/AdminOrders'
 import AdminUsers from './components/AdminUsers'
+import Success from './components/Success'
+import Canceled from './components/Canceled'
 
 /**
  * COMPONENT
@@ -26,18 +29,19 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-
+        {/* Routes placed here are available to all visitors  */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/products/:productId/reviews" component={Reviews} />
-
-        <Route path="/products" component={AllProducts} />
+        <Route path="/products" component={AllProducts} />{' '}
+        <Route exact path="/cart" component={Cart} />
+        <Route path="/success" component={Success} />
+        <Route path="/canceled" component={Canceled} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route exact path="/home" component={UserHome} />
+            <Route exact path="/account" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/admin" component={AdminMain} />
             <Route exact path="/admin/products" component={AdminProducts} />

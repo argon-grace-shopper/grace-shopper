@@ -15,7 +15,6 @@ export const fetchMyCurrentOrder = () => {
   return async (dispatch) => {
     try {
       const {data} = await axios.get(`/api/cart`)
-      console.log(data)
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
@@ -55,6 +54,42 @@ export const addToCart = (product) => {
       dispatch(setCreatedOrder(data))
     } catch (error) {
       console.error(error)
+    }
+  }
+}
+
+export const saveCheckoutPrice = (product, orderId) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/cart/save-checkout-price`, {
+        product: product,
+        orderId: orderId,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const updateOrderStatus = (orderId) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/cart/order-status-update`, {orderId})
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const updateInventoryQuantity = (productId, newInventoryQuantity) => {
+  return async (dispatch) => {
+    try {
+      await axios.put('/api/cart/update-product-inventory', {
+        productId: productId,
+        newInventoryQuantity: newInventoryQuantity,
+      })
+    } catch (err) {
+      console.error(err)
     }
   }
 }

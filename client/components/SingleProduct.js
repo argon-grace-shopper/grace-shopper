@@ -7,8 +7,14 @@ import {
   addToCart,
   updateQtyInCart,
 } from '../store/myCurrentOrder'
+
 import Reviews from './Reviews'
 import _find from 'lodash/find'
+
+import {Layout, Card, Collapse, Button} from 'antd'
+
+const {Panel} = Collapse
+const {Header, Content, Footer} = Layout
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -18,55 +24,83 @@ class SingleProduct extends React.Component {
   componentDidMount() {
     try {
       const productId = this.props.match.params.id
-      console.log('component did mount')
       this.props.getProduct(productId)
       this.props.fetchOrder()
     } catch (error) {
       console.error(error)
     }
   }
+
   handleAddToCartButtonClick() {
     const productId = this.props.match.params.id
+    let currentProductInCart
     if (this.props.createdOrder.length) {
-      const currentProductInCart = _find(this.props.createdOrder[0].products, {
+      currentProductInCart = _find(this.props.createdOrder[0].products, {
         id: +productId,
       })
-      if (currentProductInCart) {
-        currentProductInCart.order_product.cartQuantity++
-        this.props.updateQtyInCart(currentProductInCart)
-      } else {
-        this.props.addToCart(this.props.product)
-      }
+    }
+    if (currentProductInCart) {
+      currentProductInCart.order_product.cartQuantity++
+      this.props.updateQtyInCart(currentProductInCart)
     } else {
-      //need to create a new order
+      this.props.addToCart(this.props.product)
     }
   }
 
   render() {
     const {product} = this.props.product
-    console.log('product', product)
-    console.log('review', this.props.product.reviews)
+
+    console.log('hiii', product)
+
     return product ? (
-      <div className="single-product">
-        <div>
-          <h3>{product.title}</h3>
-          <h3> {product.price}</h3>
-        </div>
-        <p>{product.desciption}</p>
-        <img src={product.imageUrl} style={{width: 300, height: 300}} />
-        <Reviews productId={this.props.match.params.id} />
-        {/* {product.reviews ? (
-          <p>reviews</p>
-        ) : (
-          <p>Be the first to review this product!</p>
-        )} */}
-        {/* check if theres already an order add product id to order, if not create order, and add product id */}
-        <button type="button" onClick={this.handleAddToCartButtonClick}>
-          Add To Cart
-        </button>
-      </div>
+      <Layout>
+        <Header id="header">
+          <h1>{product.title}</h1>
+        </Header>
+        <Content>
+          <div className="single-product">
+            <Card>
+              <div className="single-product-info">
+                <img src={product.imageUrl} style={{width: 300, height: 300}} />
+                <div>
+                  <h3>{product.title}</h3>
+                  <p> ${product.price}</p>
+                </div>
+              </div>
+              {product.inventoryQuantity > 0 ? (
+                <Button
+                  className="add-button"
+                  type="primary"
+                  onClick={this.handleAddToCartButtonClick}
+                >
+                  Add To Cart
+                </Button>
+              ) : (
+                <Button
+                  disabled
+                  className="add-button"
+                  type="primary"
+                  onClick={this.handleAddToCartButtonClick}
+                >
+                  Add To Cart
+                </Button>
+              )}
+            </Card>
+
+            <Collapse defaultActiveKey={['1']}>
+              <Panel header="Description" key="1">
+                <p>{product.description}</p>
+              </Panel>
+              <Panel header="Reviews" key="2">
+                <Reviews productId={this.props.match.params.id} />
+              </Panel>
+            </Collapse>
+          </div>
+        </Content>
+        <Footer id="footer">Footer</Footer>
+      </Layout>
     ) : (
-      <div>..Loading </div>
+      <div>...Loading </div>
     )
   }
 }

@@ -1,3 +1,7 @@
+.app {
+  width: 960px;
+  margin: auto;
+}
 body {
   font-family: sans-serif;
 }
@@ -10,6 +14,10 @@ label {
   display: block;
 }
 
+#nav-container {
+  background-color: #254d32;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
@@ -20,9 +28,57 @@ form div {
   display: inline-block;
 }
 
-single-product {
-  display: flex;
+h1,
+h2 {
+  text-align: center;
+  color: #e8f1f2;
 }
+
+hr {
+  color: #c9f0ff;
+  background-color: #c9f0ff;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#sidebar {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  min-height: 600px;
+}
+
+#header {
+  background-color: #848c8e;
+  color: #e8f1f2;
+}
+
+#footer {
+  background-color: #e8f1f2;
+}
+
+#content {
+  background-color: #e8f1f2;
+}
+
+.single-product {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 5% 20% 5% 20%;
+  background-color: white;
+}
+
+.single-product-info {
+  display: flex;
+  flex-direction: row;
+}
+
 .all-products-container {
   display: flex;
   flex-direction: row;
@@ -32,11 +88,11 @@ single-product {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 5%;
 }
 
 .all-products-panel {
-  display: flex;
-  flex-direction: column;
+  align-content: center;
   width: 25%;
 }
 
@@ -44,9 +100,45 @@ single-product {
   max-width: 100%;
 }
 
-.sidebar {
-  background-color: cornflowerblue;
-  min-width: 20%;
+.add-button {
+  width: 50%;
+  margin: 0 25% 0 25%;
+}
+
+.cart-item-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.not-enough-stock {
+  font-size: 11px;
+}
+.image-stock-info {
   display: flex;
   flex-direction: column;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.cart-container {
+  margin: 20px;
+}
+
+.subtotal-checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 75px;
+}
+.subtotal {
+  font-size: 20px;
 }

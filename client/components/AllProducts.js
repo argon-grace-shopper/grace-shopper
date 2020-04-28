@@ -4,10 +4,14 @@ import {Link} from 'react-router-dom'
 import {fetchAllProducts} from '../store/products'
 import {fetchCategories} from '../store/categories'
 
+import {Layout, Card, Menu, Pagination} from 'antd'
+const {Header, Footer, Sider, Content} = Layout
+const {SubMenu} = Menu
+
 export class AllProducts extends React.Component {
   constructor() {
     super()
-    this.category = 'all products'
+    this.category = 0
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -17,7 +21,7 @@ export class AllProducts extends React.Component {
   }
 
   handleChange(event) {
-    this.category = event.target.value
+    this.category = Number(event.key)
     this.props.getAllProducts()
   }
 
@@ -25,61 +29,86 @@ export class AllProducts extends React.Component {
     const products = this.props.products
     const categories = this.props.categories
 
-    // console.log(campuses[0]);
-
     return (
-      <div>
-        <h2>ALL PRODUCTS</h2>
-
-        {products ? (
-          <div className="all-products-container">
-            <div className="sidebar">
-              <h3>Product Categories</h3>
-              <select onChange={this.handleChange} defaultValue={this.category}>
-                <option>all products</option>
-                {categories.map(category => {
-                  return <option key={category.id}>{category.name}</option>
-                })}
-              </select>
-            </div>
+      <Layout>
+        <Header id="header">
+          <h1>All Plants</h1>
+        </Header>
+        <Layout>
+          <Sider id="sidebar">
+            {products ? (
+              <Menu
+                onClick={this.handleChange}
+                defaultSelectedKeys={[`${this.category}`]}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+              >
+                <SubMenu
+                  key="sub1"
+                  title={
+                    <span>
+                      <span>Plants</span>
+                    </span>
+                  }
+                >
+                  <Menu.ItemGroup key="g1">
+                    <Menu.Item key="0">all plant types</Menu.Item>
+                    {categories.map((category) => {
+                      return (
+                        <Menu.Item key={category.id}>{category.name}</Menu.Item>
+                      )
+                    })}
+                  </Menu.ItemGroup>
+                </SubMenu>
+              </Menu>
+            ) : (
+              <h3>Loading...</h3>
+            )}
+          </Sider>
+          <Content id="content">
             <div className="all-products-panel-container">
-              {products.map(product => {
-                if (
-                  this.category === 'all products' ||
-                  this.category === product.category.name
-                ) {
-                  return (
-                    <div className="all-products-panel" key={product.id}>
-                      <Link product={product} to={`/products/${product.id}`}>
-                        <img src={product.imageUrl} />
-                        <p>{product.title}</p>
-                      </Link>
-                      <small>{product.price}</small>
-                    </div>
-                  )
-                }
-              })}
+              {products ? (
+                products.map((product) => {
+                  if (
+                    this.category === 0 ||
+                    this.category === product.categoryId
+                  ) {
+                    return (
+                      <Card className="all-products-panel" key={product.id}>
+                        <Link product={product} to={`/products/${product.id}`}>
+                          <img src={product.imageUrl} />
+                          <p>{product.title}</p>
+                        </Link>
+                        <small>$ {product.price}</small>
+                      </Card>
+                    )
+                  }
+                })
+              ) : (
+                <h3>Loading...</h3>
+              )}
             </div>
-          </div>
-        ) : (
-          <h3>Loading...</h3>
-        )}
-      </div>
+
+            <Pagination className="center" defaultCurrent={1} total={5} />
+          </Content>
+        </Layout>
+        <Footer id="footer"></Footer>
+      </Layout>
     )
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
     products: state.products,
-    categories: state.categories
+    categories: state.categories,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     getAllProducts: () => dispatch(fetchAllProducts()),
-    getCategories: () => dispatch(fetchCategories())
+    getCategories: () => dispatch(fetchCategories()),
   }
 }
 

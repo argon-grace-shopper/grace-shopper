@@ -52,7 +52,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 }
 // export const deleteProduct = product => async (dispatch, getState) => {
 //     try {
-//       const { data: deleteProduct } = await Axios.delete(
+//       const { data: deleteProduct } = await axios.delete(
 //         `/api/products/${product.id}`,
 //         product
 //       );
@@ -63,7 +63,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 //   };
 //   export const createProduct = product => async (dispatch, getState) => {
 //     try {
-//       const { data: createProduct } = await Axios.post(
+//       const { data: createProduct } = await axios.post(
 //         `/api/products/${product.id}`,
 //         product
 //       );

@@ -6,6 +6,8 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const SET_MY_PRODUCTS = 'SET_MY_PRODUCTS'
+const SET_MY_ORDERS = 'SET_MY_ORDERS'
 
 /**
  * INITIAL STATE
@@ -15,13 +17,57 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const getUser = (user) => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const setMyProducts = (myProducts) => ({type: SET_MY_PRODUCTS, myProducts})
+const setMyOrders = (myOrders) => ({type: SET_MY_ORDERS, myOrders})
 
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
+
+export const fetchMyProducts = () => async (dispatch) => {
+  try {
+    const {data} = await axios.get('/api/user/completeOrders')
+    const productArr = []
+
+    data.forEach((order) => {
+      order.products.forEach((product) => {
+        if (!productArr.includes(product.id)) {
+          productArr.push(product.id)
+        }
+      })
+    })
+    console.log('my products', productArr)
+
+    dispatch(setMyProducts(productArr))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const fetchMyOrders = () => async (dispatch) => {
+  try {
+    const {data} = await axios.get('/api/user/allOrders')
+
+    console.log('my data', data)
+    // const orderArr = []
+
+    // data.forEach(order => {
+    //   order.products.forEach(product => {
+    //     if (!productArr.includes(product.id)) {
+    //       productArr.push(product.id)
+    //     }
+    //   })
+    // })
+
+    dispatch(setMyOrders(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const me = () => async (dispatch) => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
@@ -30,7 +76,7 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (email, password, method) => async (dispatch) => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
@@ -46,7 +92,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 }
 
-export const logout = () => async dispatch => {
+export const logout = () => async (dispatch) => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
@@ -59,12 +105,16 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case SET_MY_PRODUCTS:
+      return {...state, myProducts: action.myProducts}
+    case SET_MY_ORDERS:
+      return {...state, myOrders: action.myOrders}
     default:
       return state
   }
