@@ -63,9 +63,15 @@ router.get('/', async (req, res, next) => {
 
 router.put('/remove-from-cart', async (req, res, next) => {
   try {
-    const createdOrdersById = await Order.findAll(findByUser(req))
-    await createdOrdersById[0].removeProduct(req.body.id)
-    res.json(createdOrdersById)
+    if (req.user) {
+      const createdOrdersById = await Order.findAll(findByUser(req))
+      await createdOrdersById[0].removeProduct(req.body.id)
+      res.json(createdOrdersById)
+    } else {
+      delete req.session.cart[req.body.id]
+      const guestCart = await getGuestCart(req)
+      res.json(guestCart)
+    }
   } catch (err) {
     next(err)
   }
