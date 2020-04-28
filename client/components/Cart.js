@@ -81,12 +81,15 @@ export const Cart = (props) => {
       setErrorMessage(error.message)
     }
   }
-  console.log(props)
+
   return (
     <div className="cart-container">
       <h2>Shopping Cart</h2>
       {!props.createdOrder.length || !props.createdOrder[0].products.length ? (
-        <h4> There is nothing in the cart</h4>
+        <div>
+          <h3>The cart is empty</h3>
+          <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
+        </div>
       ) : errorMessage ? (
         <div>{errorMessage}</div>
       ) : (

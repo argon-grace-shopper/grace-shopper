@@ -5,7 +5,7 @@ const Canceled = () => {
   return (
     <div>
       <h1>Sorry, something went wrong. Your payment was canceled.</h1>
-      <Link to="/cart">Go back to cart</Link>
+      <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
     </div>
   )
 }

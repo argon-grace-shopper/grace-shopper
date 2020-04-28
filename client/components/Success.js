@@ -42,9 +42,12 @@ const Success = (props) => {
   }, [props.createdOrder])
 
   return (
-    <div>
+    <div className="success-page-container">
       <h1>Success! Your payment has been processed!</h1>
-      <Link to="/products">Continue shopping</Link>
+      <Link to="/products">
+        <h3 style={{color: '#3AB795'}}>Continue shopping</h3>
+      </Link>
+      <img src="https://i.gifer.com/2MSy.gif" />
     </div>
   )
 }
