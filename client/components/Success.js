@@ -31,13 +31,17 @@ const Success = (props) => {
   useEffect(() => {
     if (props.createdOrder.length) {
       props.createdOrder[0].products.forEach((product) => {
-        props.saveCheckoutPrice(product, props.createdOrder[0].id)
+        if (props.createdOrder[0].id !== 'Guest Order') {
+          props.saveCheckoutPrice(product, props.createdOrder[0].id)
+        }
         props.updateInventoryQuantity(
           product.id,
           product.inventoryQuantity - product.order_product.cartQuantity
         )
       })
-      props.updateOrderStatus(props.createdOrder[0].id)
+      if (props.createdOrder[0].id !== 'Guest Order') {
+        props.updateOrderStatus(props.createdOrder[0].id)
+      }
     }
   }, [props.createdOrder])
 
