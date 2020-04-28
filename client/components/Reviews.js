@@ -1,21 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchReviews, postReview} from '../store/reviews'
+import {fetchMyProducts} from '../store/user'
 
 export class Review extends React.Component {
   constructor() {
     super()
-    this.reviewFlag = true
+    this.reviewFlag = false
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
-      reviewBody: ''
+      reviewBody: '',
     }
   }
 
   handleChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
@@ -26,23 +27,28 @@ export class Review extends React.Component {
       const review = {
         description: this.state.reviewBody,
         productId: this.props.productId,
-        userId: 1
+        userId: 1,
       }
       this.props.postReview(review, this.props.productId)
       this.setState({
-        reviewBody: ''
+        reviewBody: '',
       })
+      this.props.getReviews(this.props.productId)
     } catch (err) {
       console.log(err)
       this.setState({
-        reviewBody: ''
+        reviewBody: '',
       })
     }
   }
 
   componentDidMount() {
     this.props.getReviews(this.props.productId)
-    // if (this.props.user.product.productId) this.reviewFlag = true
+    this.props.getMyProducts()
+
+    // if (this.props.user.myProducts.includes(this.props.productId)) {
+    // 	this.reviewFlag = true;
+    // }
   }
 
   render() {
@@ -53,7 +59,7 @@ export class Review extends React.Component {
     return (
       <div className="reviews-container">
         {reviews ? (
-          reviews.map(review => {
+          reviews.map((review) => {
             return (
               <div key={review.id} className="reviews-panel">
                 <p>{review.description}</p>
@@ -83,16 +89,18 @@ export class Review extends React.Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    reviews: state.reviews
+    reviews: state.reviews,
+    user: state.user,
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    getReviews: productId => dispatch(fetchReviews(productId)),
-    postReview: (review, productId) => dispatch(postReview(review, productId))
+    getReviews: (productId) => dispatch(fetchReviews(productId)),
+    postReview: (review, productId) => dispatch(postReview(review, productId)),
+    getMyProducts: () => dispatch(fetchMyProducts()),
   }
 }
 

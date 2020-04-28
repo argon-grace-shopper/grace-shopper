@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const SET_MY_PRODUCTS = 'SET_MY_PRODUCTS'
 
 /**
  * INITIAL STATE
@@ -17,10 +18,31 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const setMyProducts = myProducts => ({type: SET_MY_PRODUCTS, myProducts})
 
 /**
  * THUNK CREATORS
  */
+
+export const fetchMyProducts = () => async dispatch => {
+  try {
+    const {data} = await axios.get('/api/user/orders')
+    const productArr = []
+
+    data.forEach(order => {
+      order.products.forEach(product => {
+        if (!productArr.includes(product.id)) {
+          productArr.push(product.id)
+        }
+      })
+    })
+
+    dispatch(setMyProducts(productArr))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -65,6 +87,8 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case SET_MY_PRODUCTS:
+      return {...state, myProducts: action.myProducts}
     default:
       return state
   }
