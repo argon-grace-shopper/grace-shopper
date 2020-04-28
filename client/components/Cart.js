@@ -28,6 +28,7 @@ const dispatchToProps = (dispatch) => {
 export const Cart = (props) => {
   const [subTotal, setSubTotal] = useState()
   const [errorMessage, setErrorMessage] = useState()
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const subtotalCalc = () => {
     if (props.createdOrder.length > 0) {
@@ -38,6 +39,22 @@ export const Cart = (props) => {
       setSubTotal(total.toFixed(2))
     }
   }
+
+  const checkInventory = () => {
+    if (props.createdOrder.length) {
+      const result = props.createdOrder[0].products.some((product) => {
+        return (
+          product.inventoryQuantity - product.order_product.cartQuantity < 0
+        )
+      })
+      setIsDisabled(result)
+    }
+  }
+
+  useEffect(() => {
+    checkInventory()
+  }, [props.createdOrder])
+
   useEffect(() => {
     props.getMyCurrentOrder()
   }, [])
@@ -85,7 +102,7 @@ export const Cart = (props) => {
     <div className="cart-container">
       <h2>Shopping Cart</h2>
       {!props.createdOrder.length || !props.createdOrder[0].products.length ? (
-        <div>
+        <div className="empty-cart">
           <h3>The cart is empty</h3>
           <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
         </div>
@@ -158,6 +175,7 @@ export const Cart = (props) => {
               <Button
                 type="primary"
                 role="link"
+                disabled={isDisabled}
                 onClick={handleCheckoutClick}
                 style={{backgroundColor: '#254D32', borderColor: '#254D32'}}
               >

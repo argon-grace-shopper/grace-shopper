@@ -14,6 +14,6 @@ router.post('/create-checkout-session', async (req, res) => {
     success_url: `${domainURL}/success`,
     cancel_url: `${domainURL}/canceled`,
   })
-  console.log(session.id)
+  console.log(session)
   res.send(session.id)
 })
