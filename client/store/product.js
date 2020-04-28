@@ -1,9 +1,6 @@
 import axios from 'axios'
 
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
-// const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT'
-// const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
-// const DELETE_PRODUCT = 'DELETE_PRODUCT'
 // const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const ADD_REVIEW = 'ADD_REVIEW'
 
@@ -14,20 +11,6 @@ export const getSingleProduct = (product) => {
   }
 }
 
-// export const setProduct = product => {
-//   return {
-//     type: SET_SINGLE_PRODUCT,
-//     product
-//   }
-// }
-// export const updateProduct = product => ({
-//   type: UPDATE_PRODUCT,
-//   product
-// })
-// export const deleteProduct = product => ({
-//   type: DELETE_PRODUCT,
-//   product
-// })
 // export const createProduct = product => ({
 //   type: UPDATE_PRODUCT,
 //   product
@@ -44,39 +27,26 @@ export const fetchSingleProduct = (id) => async (dispatch) => {
     console.log(err)
   }
 }
-// export const setSingleProduct = id => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await axios.get(`/api/products/${id}`)
-//       dispatch(setProduct(data))
-//     } catch (err) {
-//       console.log(err)
-//     }
-//   }
-// }
+export const fetchUpdateProduct = (product) => async (dispatch) => {
+  try {
+    const {data: updateProduct} = await axios.put(
+      `/api/products/${product.id}`,
+      product
+    )
+    dispatch(getSingleProduct(updateProduct))
+  } catch (err) {
+    console.log(err)
+  }
+}
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    const {data: deleteProduct} = await axios.delete(`/api/products/${id}`)
+    dispatch(getSingleProduct(deleteProduct))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-// export const updateProduct = product => async (dispatch, getState) => {
-//   try {
-//     const { data: updateProduct } = await axios.post(
-//       `/api/products/${product.id}`,
-//       product
-//     );
-//     dispatch(update(updateProduct));
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-// export const deleteProduct = product => async (dispatch, getState) => {
-//     try {
-//       const { data: deleteProduct } = await axios.delete(
-//         `/api/products/${product.id}`,
-//         product
-//       );
-//       dispatch(update(deleteProduct));
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
 //   export const createProduct = product => async (dispatch, getState) => {
 //     try {
 //       const { data: createProduct } = await axios.post(
@@ -91,12 +61,8 @@ export const fetchSingleProduct = (id) => async (dispatch) => {
 const initialProduct = {}
 export default function productReducer(product = initialProduct, action) {
   switch (action.type) {
-    // case SET_SINGLE_PRODUCT:
-    //   return action.product
     case GET_SINGLE_PRODUCT:
       return {...initialProduct, product: action.product}
-    // case UPDATE_PRODUCT:
-    //   return action.product
     //   case ADD_REVIEW:
     //   return action.product;
     default:

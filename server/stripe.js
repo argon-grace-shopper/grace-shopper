@@ -5,7 +5,8 @@ const dotenv = require('dotenv').config({path: './.env'})
 const stripe = require('stripe')('sk_test_Lx6lFDJ0K9JllTCduCiLy9ol00Zue884Go')
 
 router.post('/create-checkout-session', async (req, res) => {
-  const domainURL = 'http://localhost:8080'
+  const domainURL =
+    'http://localhost:8080' || 'https://grace-shopper-argon.herokuapp.com/'
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: req.body,

@@ -187,6 +187,7 @@ router.put('/update-product-inventory', async (req, res, next) => {
         },
       }
     )
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }

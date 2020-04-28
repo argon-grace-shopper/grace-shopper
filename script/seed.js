@@ -8,7 +8,7 @@ const {
   Order,
   Review,
   Order_Product,
-  Category
+  Category,
 } = require('../server/db/models')
 
 async function seed() {
@@ -17,7 +17,7 @@ async function seed() {
 
   const users = [
     {email: 'cody@email.com', password: '123'},
-    {email: 'murphy@email.com', password: '123'}
+    {email: 'murphy@email.com', password: '123'},
   ]
 
   const products = [
@@ -29,7 +29,7 @@ async function seed() {
       price: 29.99,
       inventoryQuantity: 20,
       imageUrl:
-        'https://www.parasperfumers.com/upload/product_ecom/Eucalyptus-Radiata-Essential-Oil-ProductPic.jpg'
+        'https://www.parasperfumers.com/upload/product_ecom/Eucalyptus-Radiata-Essential-Oil-ProductPic.jpg',
     },
     {
       title: 'Aloe Vera',
@@ -38,21 +38,21 @@ async function seed() {
       price: 3.5,
       inventoryQuantity: 50,
       imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSlzFimnp1eBL0y4FkFNUJgQnWrRh0i4QlDdnP_ZtdjG2FEGBRc&usqp=CAU'
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSlzFimnp1eBL0y4FkFNUJgQnWrRh0i4QlDdnP_ZtdjG2FEGBRc&usqp=CAU',
     },
     {
       title: 'Oak Seedling',
       description: 'will grow into a big tree, produces acorns',
       categoryId: 1,
       price: 10.0,
-      inventoryQuantity: 8
+      inventoryQuantity: 8,
     },
     {
       title: 'Tulip',
       description: 'pretty basic flower',
       categoryId: 2,
       price: 2.0,
-      inventoryQuantity: 1 // someone has >1 of these in their cart
+      inventoryQuantity: 1, // someone has >1 of these in their cart
     },
     {
       title: 'Purple Passion Vine',
@@ -61,8 +61,8 @@ async function seed() {
       price: 9.5,
       inventoryQuantity: 23,
       imageUrl:
-        'https://www.netclipart.com/pp/m/346-3467700_clip-art-purple-branch-purple-leaves-clip-art.png'
-    }
+        'https://www.netclipart.com/pp/m/346-3467700_clip-art-purple-branch-purple-leaves-clip-art.png',
+    },
   ]
 
   const categories = [
@@ -70,7 +70,7 @@ async function seed() {
     {name: 'flower'},
     {name: 'shrub'},
     {name: 'succulent'},
-    {name: 'vine'}
+    {name: 'vine'},
   ]
 
   const orderProducts = [
@@ -83,22 +83,22 @@ async function seed() {
     {orderId: 3, productId: 3, cartQuantity: 20, checkoutPrice: 9.99},
     {orderId: 4, productId: 4, cartQuantity: 3, checkoutPrice: 29.99},
     {orderId: 4, productId: 2, cartQuantity: 1, checkoutPrice: 10.0},
-    {orderId: 5, productId: 5, cartQuantity: 1} // not checked out yet
+    {orderId: 5, productId: 5, cartQuantity: 1}, // not checked out yet
     // orderId: 6 has no items in the cart, so they have no rows in this table
   ]
   const reviews = [
     {
       description: 'Loved my aloe vera! 10/10 would recommend',
       userId: 1,
-      productId: 2
+      productId: 2,
     },
     {description: 'I killed my purple passion vine', userId: 1, productId: 5},
     {
       description: "My oak tree isn't growing fast enough",
       userId: 2,
-      productId: 3
+      productId: 3,
     },
-    {description: 'Aloe vera tastes funny', userId: 2, productId: 2}
+    {description: 'Aloe vera tastes funny', userId: 2, productId: 2},
   ]
 
   const orders = [
@@ -107,7 +107,7 @@ async function seed() {
     {status: 'complete', userId: 1},
     {status: 'complete', userId: 2},
     {status: 'cancelled', userId: 1},
-    {status: 'created', userId: 2} // this order was created, but then the user deleted all items from their cart
+    {status: 'created', userId: 2}, // this order was created, but then the user deleted all items from their cart
   ]
 
   await User.bulkCreate(users)

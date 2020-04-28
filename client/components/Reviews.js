@@ -47,7 +47,6 @@ export class Review extends React.Component {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
 
-
     // if (this.props.user.myProducts.includes(this.props.productId)) {
     // 	this.reviewFlag = true;
     // }
@@ -57,7 +56,6 @@ export class Review extends React.Component {
     const reviews = this.props.reviews
     const productId = this.props.productId
     const userId = this.props.userId
-
 
     if (
       this.props.purchasedProducts &&
