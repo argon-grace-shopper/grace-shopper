@@ -1,7 +1,4 @@
 import React from 'react'
-// import {Menu, Dropdown} from 'antd'
-// import {DownOutlined} from '@ant-design/icons'
-import {menu} from './AdminDropdown'
 
 export default class Admin extends React.Component {
   constructor(props) {
@@ -28,13 +25,6 @@ export default class Admin extends React.Component {
           <button>Logout</button>
         </div>
       </div>
-      // <div id="container">
-      //   <Dropdown overlay={menu} trigger={['click']}>
-      //     <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-      //       Admin Actions <DownOutlined />
-      //     </a>
-      //   </Dropdown>
-      // </div>
     )
   }
 }
