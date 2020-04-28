@@ -20,11 +20,13 @@ const getGuestCart = async (req) => {
   // guest cart in a structure that mimics a logged-in user’s cart
   // req.session.cart = {‘productId’ : quantity }
   // e.g.
-  // { ‘2’: 4,
-  //   ‘3’: 1 }
+  // { '2': 4,
+  //   '3': 1 }
+
   const productAry = []
   if (req.session.cart) {
     const productIdAry = Object.keys(req.session.cart)
+
     for (let i = 0; i < productIdAry.length; i++) {
       const prodId = productIdAry[i]
       const productObj = await Product.findByPk(prodId)
