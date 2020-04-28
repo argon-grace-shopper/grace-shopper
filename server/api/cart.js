@@ -17,41 +17,31 @@ const findByUser = (req) => {
 
 const getGuestCart = async (req) => {
   // this helper function retrieves the guest cart and outputs the
-  // guest cart in a structure that mimics a logged-in user's cart
-
-  // req.session.cart = {'productId' : quantity }
+  // guest cart in a structure that mimics a logged-in user’s cart
+  // req.session.cart = {‘productId’ : quantity }
   // e.g.
-  // { '2': 4,
-  //   '3': 1 }
-
-  const productIdAry = Object.keys(req.session.cart)
+  // { ‘2’: 4,
+  //   ‘3’: 1 }
   const productAry = []
-
-  for (let i = 0; i < productIdAry.length; i++) {
-    const prodId = productIdAry[i]
-    const productObj = await Product.findByPk(prodId)
-    const product = productObj.dataValues
-    // eslint-disable-next-line camelcase
-    product.
-      
-      
-      
-      
-      
-      
-      = {
-      cartQuantity: req.session.cart[prodId],
+  if (req.session.cart) {
+    const productIdAry = Object.keys(req.session.cart)
+    for (let i = 0; i < productIdAry.length; i++) {
+      const prodId = productIdAry[i]
+      const productObj = await Product.findByPk(prodId)
+      const product = productObj.dataValues
+      // eslint-disable-next-line camelcase
+      product.order_product = {
+        cartQuantity: req.session.cart[prodId],
+      }
+      productAry.push(product)
     }
-    productAry.push(product)
   }
-
   const output = [
     {
       id: 'Guest Order',
       products: productAry,
     },
   ]
-
   return output
 }
 
