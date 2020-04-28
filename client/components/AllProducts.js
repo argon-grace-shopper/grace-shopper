@@ -4,14 +4,14 @@ import {Link} from 'react-router-dom'
 import {fetchAllProducts} from '../store/products'
 import {fetchCategories} from '../store/categories'
 
-import {Layout, Card, Space, Pagination} from 'antd'
-import {lime, green} from '@ant-design/colors'
+import {Layout, Card, Menu, Pagination} from 'antd'
 const {Header, Footer, Sider, Content} = Layout
+const {SubMenu} = Menu
 
 export class AllProducts extends React.Component {
   constructor() {
     super()
-    this.category = 'all products'
+    this.category = 0
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -21,7 +21,7 @@ export class AllProducts extends React.Component {
   }
 
   handleChange(event) {
-    this.category = event.target.value
+    this.category = Number(event.key)
     this.props.getAllProducts()
   }
 
@@ -32,36 +32,46 @@ export class AllProducts extends React.Component {
     return (
       <Layout>
         <Header id="header">
-          <h2>ALL PRODUCTS</h2>
+          <h1>All Plants</h1>
         </Header>
         <Layout>
           <Sider id="sidebar">
-            <Space direction="vertical">
-              {products ? (
-                <div>
-                  <h3>Product Categories</h3>
-                  <select
-                    onChange={this.handleChange}
-                    defaultValue={this.category}
-                  >
-                    <option>all products</option>
+            {products ? (
+              <Menu
+                onClick={this.handleChange}
+                defaultSelectedKeys={[`${this.category}`]}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+              >
+                <SubMenu
+                  key="sub1"
+                  title={
+                    <span>
+                      <span>Plants</span>
+                    </span>
+                  }
+                >
+                  <Menu.ItemGroup key="g1">
+                    <Menu.Item key="0">all plant types</Menu.Item>
                     {categories.map((category) => {
-                      return <option key={category.id}>{category.name}</option>
+                      return (
+                        <Menu.Item key={category.id}>{category.name}</Menu.Item>
+                      )
                     })}
-                  </select>
-                </div>
-              ) : (
-                <h3>Loading...</h3>
-              )}
-            </Space>
+                  </Menu.ItemGroup>
+                </SubMenu>
+              </Menu>
+            ) : (
+              <h3>Loading...</h3>
+            )}
           </Sider>
-          <Content>
+          <Content id="content">
             <div className="all-products-panel-container">
               {products ? (
                 products.map((product) => {
                   if (
-                    this.category === 'all products' ||
-                    this.category === product.category.name
+                    this.category === 0 ||
+                    this.category === product.categoryId
                   ) {
                     return (
                       <Card className="all-products-panel" key={product.id}>
@@ -69,7 +79,7 @@ export class AllProducts extends React.Component {
                           <img src={product.imageUrl} />
                           <p>{product.title}</p>
                         </Link>
-                        <small>{product.price}</small>
+                        <small>$ {product.price}</small>
                       </Card>
                     )
                   }
@@ -78,48 +88,12 @@ export class AllProducts extends React.Component {
                 <h3>Loading...</h3>
               )}
             </div>
-            <Pagination defaultCurrent={1} total={5} />
+
+            <Pagination className="center" defaultCurrent={1} total={5} />
           </Content>
         </Layout>
-
-        <Footer id="footer">Footer</Footer>
+        <Footer id="footer"></Footer>
       </Layout>
-
-      // <div>
-      //     {products ? (
-      //       <div className="all-products-container">
-      //         <div className="sidebar">
-      //           <h3>Product Categories</h3>
-      //           <select onChange={this.handleChange} defaultValue={this.category}>
-      //             <option>all products</option>
-      //             {categories.map(category => {
-      //               return <option key={category.id}>{category.name}</option>
-      //             })}
-      //           </select>
-      //         </div>
-      //         <div className="all-products-panel-container">
-      //           {products.map(product => {
-      //             if (
-      //               this.category === 'all products' ||
-      //               this.category === product.category.name
-      //             ) {
-      //               return (
-      //                 <div className="all-products-panel" key={product.id}>
-      //                   <Link product={product} to={`/products/${product.id}`}>
-      //                     <img src={product.imageUrl} />
-      //                     <p>{product.title}</p>
-      //                   </Link>
-      //                   <small>{product.price}</small>
-      //                 </div>
-      //               )
-      //             }
-      //           })}
-      //         </div>
-      //       </div>
-      //     ) : (
-      //       <h3>Loading...</h3>
-      //     )}
-      //   </div>
     )
   }
 }

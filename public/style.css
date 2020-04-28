@@ -10,6 +10,10 @@ label {
   display: block;
 }
 
+#nav-container {
+  background-color: #254d32;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
@@ -20,20 +24,42 @@ form div {
   display: inline-block;
 }
 
+h1,
+h2 {
+  text-align: center;
+  color: #e8f1f2;
+}
+
+hr {
+  color: #c9f0ff;
+  background-color: #c9f0ff;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 #sidebar {
-  background-color: #848c8e;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-content: center;
+  min-height: 600px;
 }
 
 #header {
-  background-color: #254d32;
+  background-color: #848c8e;
   color: #e8f1f2;
 }
 
 #footer {
-  background-color: #254d32;
+  background-color: #e8f1f2;
+}
+
+#content {
+  background-color: #e8f1f2;
 }
 
 .single-product {
@@ -58,6 +84,7 @@ form div {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 5%;
 }
 
 .all-products-panel {

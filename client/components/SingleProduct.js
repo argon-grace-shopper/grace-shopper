@@ -47,10 +47,13 @@ class SingleProduct extends React.Component {
 
   render() {
     const {product} = this.props.product
+    console.log('hiii', product)
 
     return product ? (
       <Layout>
-        <Header id="header">Header</Header>
+        <Header id="header">
+          <h1>{product.title}</h1>
+        </Header>
         <Content>
           <div className="single-product">
             <Card>

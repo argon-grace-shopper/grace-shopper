@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchReviews, postReview} from '../store/reviews'
 import {fetchMyProducts} from '../store/user'
+import {Button} from 'antd'
 
 export class Review extends React.Component {
   constructor() {
@@ -83,7 +84,9 @@ export class Review extends React.Component {
                 value={this.state.reviewBody}
                 onChange={this.handleChange}
               />
-              <button type="submit">Submit</button>
+              <Button size="small" type="submit">
+                Submit
+              </Button>
             </form>
           </div>
         )}

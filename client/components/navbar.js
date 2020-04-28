@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -7,52 +7,56 @@ import {ShoppingFilled} from '@ant-design/icons'
 import {Badge} from 'antd'
 import {fetchMyCurrentOrder} from '../store/myCurrentOrder'
 
-export class Navbar extends React.Component {
-  constructor() {
-    super()
-    this.cart = 0
-  }
+export const Navbar = (props) => {
+  const [cart, setCart] = useState()
 
-  componentDidMount() {
-    this.props.getMyCurrentOrder(1)
-  }
-
-  render() {
-    if (this.props.createdOrder > 0) {
-      this.props.createdOrder.products.forEach((product) => {
-        this.cart += product.order_product.cartQuantity
+  const cartCalc = () => {
+    if (props.createdOrder.length > 0) {
+      let total = 0
+      props.createdOrder[0].products.forEach((product) => {
+        total += product.order_product.cartQuantity
       })
+      setCart(total)
     }
+  }
+  useEffect(() => {
+    props.getMyCurrentOrder()
+  }, [])
 
-    console.log(this.props, this.cart)
+  useEffect(() => {
+    cartCalc()
+  }, [props.createdOrder])
 
-    return (
-      <div>
+  return (
+    <div id="nav-container">
+      <a href="/home">
         <h1>Plant Store</h1>
-        <nav>
-          {this.props.isLoggedIn ? (
-            <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={this.props.handleClick}>
-                Logout
-              </a>
-              <Badge count={this.cart}>
+      </a>
+      <nav>
+        {props.isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home">Home</Link>
+            <Link to="/products">Products</Link>
+            <a href="#" onClick={props.handleClick}>
+              Logout
+            </a>
+            <a href="/cart">
+              <Badge count={cart}>
                 <ShoppingFilled style={{fontSize: '30px'}} />
               </Badge>
-            </div>
-          ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-          )}
-        </nav>
-        <hr />
-      </div>
-    )
-  }
+            </a>
+          </div>
+        ) : (
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  )
 }
 
 /**
@@ -61,7 +65,7 @@ export class Navbar extends React.Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    createdOrder: state.createdOrder[0],
+    createdOrder: state.createdOrder,
   }
 }
 
