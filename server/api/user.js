@@ -25,6 +25,3 @@ router.get('/orders', checkIsLoggedIn, async (req, res, next) => {
     next(err)
   }
 })
-
-// const array1 = [1, 2, 3, 4]
-// const reducer = (accumulator, currentValue) => accumulator + currentValue

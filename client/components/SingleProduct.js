@@ -19,7 +19,6 @@ class SingleProduct extends React.Component {
   componentDidMount() {
     try {
       const productId = this.props.match.params.id
-      console.log('component did mount')
       this.props.getProduct(productId)
       this.props.fetchOrder()
     } catch (error) {
@@ -42,8 +41,6 @@ class SingleProduct extends React.Component {
 
   render() {
     const {product} = this.props.product
-    console.log('product', product)
-    console.log('review', this.props.product.reviews)
     return product ? (
       <div className="single-product">
         <div>
@@ -53,7 +50,6 @@ class SingleProduct extends React.Component {
         <p>{product.desciption}</p>
         <img src={product.imageUrl} style={{width: 300, height: 300}} />
         <Reviews productId={this.props.match.params.id} />
-        {/* check if theres already an order add product id to order, if not create order, and add product id */}
         <button type="button" onClick={this.handleAddToCartButtonClick}>
           Add To Cart
         </button>

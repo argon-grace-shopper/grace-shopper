@@ -55,10 +55,6 @@ router.get('/', async (req, res, next) => {
       res.json(createdOrdersById)
     } else {
       const guestCart = await getGuestCart(req)
-      console.log(
-        'THIS IS WHAT GUEST CART LOOKS LIKE IN GET /CART: ',
-        guestCart
-      )
       res.json(guestCart)
     }
   } catch (err) {
@@ -131,15 +127,8 @@ router.post('/add-to-cart/', async (req, res, next) => {
       const guestCart = await getGuestCart(req)
 
       res.json(guestCart[0])
-      // async/await does not work in array methods (map, forEach, etc)
-      // const productAry = productIdAry.map(async (prodId) => {
-      // 	const product = await Product.findByPk(prodId);
-      // 	return product;
-      // });
     }
   } catch (err) {
     next(err)
   }
 })
-
-//set checkoutprice

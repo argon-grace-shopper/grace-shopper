@@ -3,20 +3,20 @@ import axios from 'axios'
 const SET_REVIEWS = 'SET_REVIEWS'
 const GOT_NEW_REVIEW = 'GOT_NEW_REVIEW'
 
-export const setReviews = reviews => {
+export const setReviews = (reviews) => {
   return {
     type: SET_REVIEWS,
-    reviews
+    reviews,
   }
 }
 
-export const gotNewReview = review => ({
+export const gotNewReview = (review) => ({
   type: GOT_NEW_REVIEW,
-  review
+  review,
 })
 
-export const fetchReviews = productId => {
-  return async dispatch => {
+export const fetchReviews = (productId) => {
+  return async (dispatch) => {
     try {
       const {data} = await axios.get(`/api/products/${productId}/reviews`)
       dispatch(setReviews(data))
@@ -27,14 +27,13 @@ export const fetchReviews = productId => {
 }
 
 export const postReview = (review, productId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       const response = await axios.post(
         `/api/products/${productId}/reviews`,
         review
       )
       const newReview = response.data
-      console.log('newReview', newReview)
       dispatch(gotNewReview(newReview))
     } catch (err) {
       console.log(err)
@@ -51,9 +50,7 @@ export default function reviewsReducer(state = initialState, action) {
     case SET_REVIEWS:
       return action.reviews
     case GOT_NEW_REVIEW: {
-      console.log('STATE!', state)
       return [...state, action.review]
-      // return {...state, reviews}
     }
     default:
       return state
