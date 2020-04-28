@@ -28,9 +28,12 @@ class SingleProduct extends React.Component {
 
   handleAddToCartButtonClick() {
     const productId = this.props.match.params.id
-    const currentProductInCart = _find(this.props.createdOrder[0].products, {
-      id: +productId,
-    })
+    let currentProductInCart
+    if (this.props.createdOrder.length) {
+      currentProductInCart = _find(this.props.createdOrder[0].products, {
+        id: +productId,
+      })
+    }
     if (currentProductInCart) {
       currentProductInCart.order_product.cartQuantity++
       this.props.updateQtyInCart(currentProductInCart)
