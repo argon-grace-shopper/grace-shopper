@@ -1,9 +1,10 @@
 .app {
   width: 960px;
   margin: auto;
+  background-color: #e8f1f2;
 }
 body {
-  font-family: sans-serif;
+  font-family: open sans, sans-serif;
 }
 
 a {
@@ -31,11 +32,11 @@ form div {
 h1,
 h2 {
   text-align: center;
-  color: #e8f1f2;
+  color: #254d32;
 }
 
 hr {
-  color: #c9f0ff;
+  color: #254d32;
   background-color: #c9f0ff;
 }
 

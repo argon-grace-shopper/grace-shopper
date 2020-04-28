@@ -153,7 +153,12 @@ export const Cart = (props) => {
           <div className="subtotal-checkout ">
             <div className="subtotal">Subtotal: ${subTotal}</div>
             <div>
-              <Button type="primary" role="link" onClick={handleCheckoutClick}>
+              <Button
+                type="primary"
+                role="link"
+                onClick={handleCheckoutClick}
+                style={{backgroundColor: '#254D32', borderColor: '#254D32'}}
+              >
                 Checkout
               </Button>
             </div>
