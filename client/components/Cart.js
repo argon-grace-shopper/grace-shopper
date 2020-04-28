@@ -8,6 +8,8 @@ import {
 import {connect} from 'react-redux'
 import {loadStripe} from '@stripe/stripe-js'
 import axios from 'axios'
+import {Button} from 'antd'
+import {green} from '@ant-design/colors'
 
 const stripePromise = loadStripe('pk_test_5MVbKAdVRzUv9UXxVVXWOiNM00zO1he2a0')
 const mapToProps = (state) => ({
@@ -126,12 +128,12 @@ export const Cart = (props) => {
                     </p>
                   </div>
                   <div>
-                    <button
-                      type="button"
+                    <Button
+                      type="primary"
                       onClick={() => handleDeleteFromCart(product)}
                     >
                       Remove
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -151,9 +153,9 @@ export const Cart = (props) => {
           <div className="subtotal-checkout ">
             <div className="subtotal">Subtotal: ${subTotal}</div>
             <div>
-              <button type="button" role="link" onClick={handleCheckoutClick}>
+              <Button type="primary" role="link" onClick={handleCheckoutClick}>
                 Checkout
-              </button>
+              </Button>
             </div>
           </div>
         </div>
