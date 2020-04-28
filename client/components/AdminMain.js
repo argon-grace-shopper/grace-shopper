@@ -17,6 +17,7 @@ export default class Admin extends React.Component {
         <div className="sidebar">
           <h3>Admin Actions</h3>
           <select onChange={this.handleMenuClick} defaultValue={this.category}>
+            <option>Select</option>
             <option value="admin/products">products</option>
             <option value="admin/users">users</option>
             <option value="admin/orders">orders</option>
