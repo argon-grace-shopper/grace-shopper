@@ -147,3 +147,7 @@ hr {
 .success-page-container {
   margin: 20px;
 }
+
+.empty-cart {
+  text-align: center;
+}
