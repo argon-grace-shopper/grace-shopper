@@ -50,8 +50,6 @@ class SingleProduct extends React.Component {
   render() {
     const {product} = this.props.product
 
-    console.log('hiii', product)
-
     return product ? (
       <Layout>
         <Header id="header">

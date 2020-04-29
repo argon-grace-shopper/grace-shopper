@@ -15,7 +15,6 @@ import AdminOrders from './components/AdminOrders'
 import AdminUsers from './components/AdminUsers'
 import Success from './components/Success'
 import Canceled from './components/Canceled'
-
 /**
  * COMPONENT
  */
@@ -25,8 +24,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
-
+    const {isLoggedIn, isAdmin} = this.props
     return (
       <Switch>
         {/* Routes placed here are available to all visitors  */}
@@ -43,12 +41,17 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/account" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
-            <Route exact path="/admin" component={AdminMain} />
-            <Route exact path="/admin/products" component={AdminProducts} />
-            <Route exact path="/admin/orders" component={AdminOrders} />
-            <Route exact path="/admin/users" component={AdminUsers} />
           </Switch>
         )}
+        {/* {isAdmin && ( */}
+        <Switch>
+          {/* Routes placed here are only available if you're an admin */}
+          <Route exact path="/admin" component={AdminMain} />
+          <Route exact path="/admin/products" component={AdminProducts} />
+          <Route exact path="/admin/users" component={AdminUsers} />
+          <Route exact path="/admin/orders" component={AdminOrders} />
+        </Switch>
+        {/* )} */}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -64,6 +67,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
   }
 }
 
@@ -85,4 +89,5 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 }

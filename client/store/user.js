@@ -70,6 +70,7 @@ export const fetchMyOrders = () => async (dispatch) => {
 export const me = () => async (dispatch) => {
   try {
     const res = await axios.get('/auth/me')
+    console.log('res.data', res.data)
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)

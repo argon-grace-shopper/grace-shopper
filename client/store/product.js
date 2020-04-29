@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
-// const CREATE_PRODUCT = 'CREATE_PRODUCT'
 const ADD_REVIEW = 'ADD_REVIEW'
 
 export const getSingleProduct = (product) => {
@@ -11,10 +10,6 @@ export const getSingleProduct = (product) => {
   }
 }
 
-// export const createProduct = product => ({
-//   type: UPDATE_PRODUCT,
-//   product
-// })
 export const addReview = (review) => ({
   type: ADD_REVIEW,
   review,
@@ -46,18 +41,6 @@ export const deleteProduct = (id) => async (dispatch) => {
     console.log(err)
   }
 }
-
-//   export const createProduct = product => async (dispatch, getState) => {
-//     try {
-//       const { data: createProduct } = await axios.post(
-//         `/api/products/${product.id}`,
-//         product
-//       );
-//       dispatch(update(createProduct));
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
 const initialProduct = {}
 export default function productReducer(product = initialProduct, action) {
   switch (action.type) {

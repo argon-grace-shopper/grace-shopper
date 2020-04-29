@@ -6,11 +6,18 @@ import {
   deleteProduct,
 } from '../store/product'
 import {connect} from 'react-redux'
+import {Layout, Card, Button, Form, Input} from 'antd'
+const layout = {
+  labelCol: {span: 8},
+  wrapperCol: {span: 16},
+}
+const {Header, Content} = Layout
+
 class AdminProducts extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onFinish = this.onFinish.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
   componentDidMount() {
@@ -21,12 +28,11 @@ class AdminProducts extends React.Component {
     let id = e.target.value
     this.props.getSingleProduct(id)
   }
-  handleSubmit(e) {
-    e.preventDefault()
-    let title = e.target.title.value
-    let price = e.target.price.value
-    let species = e.target.species.value
-    let description = e.target.description.value
+  onFinish(values) {
+    let title = values.product.title
+    let price = values.product.price
+    let species = values.product.species
+    let description = values.product.description
     let id = this.props.product.product.id
     let product = {id, title, price, species, description}
     for (let keys in product) {
@@ -56,61 +62,63 @@ class AdminProducts extends React.Component {
             ))}
           </select>
         </div>
+
         {this.props.product.product ? (
-          <div>
-            <div>
-              <h3>{this.props.product.product.title}</h3>
-              <h3> {this.props.product.product.price}</h3>
-            </div>
-            <p>{this.props.product.product.description}</p>
-            <img
-              src={this.props.product.product.imageUrl}
-              style={{width: 300, height: 300}}
-            />
-            <h3>Delete Plant</h3>
-            <button
-              value={this.props.product.product.id}
-              onClick={this.handleDelete}
-            >
-              Delete
-            </button>
-            <form method="post" id="edit-product" onSubmit={this.handleSubmit}>
-              <div className="form">
-                <h3> Edit Plant</h3>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="title"
-                  placeholder="Enter new plant name"
-                />
-                <input
-                  className="form-control"
-                  type="text"
-                  name="price"
-                  placeholder="Enter new plant price"
-                />
-                <br />
-                <input
-                  className="form-control"
-                  type="text"
-                  name="species"
-                  placeholder="Enter new species"
-                />
-                <br />
-                <input
-                  className="form-control"
-                  type="text"
-                  name="description"
-                  placeholder="Enter new plant description"
-                />
-                <span className="input-group-btn">
-                  <button className="btn btn-default" type="submit">
-                    Submit edit
-                  </button>
-                </span>
+          <Layout>
+            <Header id="header">
+              <h1>{this.props.product.product.title}</h1>
+            </Header>
+            <Content>
+              <div className="single-product">
+                <Card>
+                  <h3> {this.props.product.product.price}</h3>
+                  <p>{this.props.product.product.description}</p>
+                  <img
+                    src={this.props.product.product.imageUrl}
+                    style={{width: 300, height: 300}}
+                  />
+                  <h3>Delete Plant</h3>
+                  <Button
+                    className="add-button"
+                    type="primary"
+                    value={this.props.product.product.id}
+                    onClick={this.handleDelete}
+                  >
+                    Delete
+                  </Button>
+                  <Form
+                    {...layout}
+                    name="nest-messages"
+                    onFinish={this.onFinish}
+                  >
+                    <div className="form">
+                      <h3> Edit Plant</h3>
+                      <Form.Item name={['product', 'title']} label="title">
+                        <Input />
+                      </Form.Item>
+                      <Form.Item name={['product', 'price']} label="price">
+                        <Input />
+                      </Form.Item>
+                      <Form.Item name={['product', 'species']} label="species">
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name={['product', 'description']}
+                        label="description"
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
+                        <Button type="primary" htmlType="submit">
+                          Submit edit
+                        </Button>
+                      </Form.Item>
+                    </div>
+                  </Form>
+                </Card>
               </div>
-            </form>
-          </div>
+            </Content>
+          </Layout>
         ) : (
           <div> No product selected</div>
         )}
