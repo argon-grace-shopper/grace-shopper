@@ -32,18 +32,10 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/products/:productId/reviews" component={Reviews} />
-        <Route path="/products" component={AllProducts} />{' '}
+        <Route path="/products" component={AllProducts} />
         <Route exact path="/cart" component={Cart} />
         <Route path="/success" component={Success} />
         <Route path="/canceled" component={Canceled} />
-        <Route>
-          <div style={{height: '300rm'}}>
-            <h1 style={{textAlign: 'center', color: '#254d32'}}>
-              We looked everywhere but couldn't find the page.
-              <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
-            </h1>
-          </div>
-        </Route>
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
