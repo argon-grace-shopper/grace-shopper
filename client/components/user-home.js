@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {Layout, Table, Button, Tabs} from 'antd'
 import {fetchMyOrders} from '../store'
 import {ProfileFilled, SettingFilled} from '@ant-design/icons'
+import AdminOrders from './AdminOrders'
 
 const {Header, Content, Footer} = Layout
 const {TabPane} = Tabs

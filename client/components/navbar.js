@@ -20,17 +20,6 @@ export const Navbar = (props) => {
     }
   }
 
-  const guestCartCalc = () => {
-    if (props.createdOrder.length > 0) {
-      let total = 0
-      props.createdOrder[0].products.forEach((product) => {
-        total += product.order_product.cartQuantity
-      })
-      setCart(total)
-    }
-  }
-
-  // if (props.isLoggedIn) {
   useEffect(() => {
     props.getMyCurrentOrder()
   }, [])
@@ -38,18 +27,14 @@ export const Navbar = (props) => {
   useEffect(() => {
     cartCalc()
   }, [props.createdOrder])
-  // } else {
-  //   useEffect(() => {
-  //     props.getMyCurrentOrder()
-  //   }, [])
-
-  //   useEffect(() => {
-  //     guestCartCalc()
-  //   }, [props.createdOrder])
-  // }
 
   const content = props.isLoggedIn ? (
     <div>
+      {props.isAdmin.isAdmin && (
+        <a href="/admin">
+          <p>Admin Dashboard</p>
+        </a>
+      )}
       <a href="/account">
         <p>Your Account</p>
       </a>
@@ -71,12 +56,10 @@ export const Navbar = (props) => {
   return (
     <div id="nav-container">
       <a href="/home">
-        <h1>Plant Store</h1>
+        <h1 style={{color: '#c9f0ff'}}>Plant Store</h1>
       </a>
       <nav>
         <div className="nav">
-          {/* The navbar will show these links after you log in */}
-
           <Link to="/products">Products</Link>
           <div>
             <Popover placement="bottomRight" content={content}>
@@ -103,6 +86,7 @@ export const Navbar = (props) => {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user,
 
     createdOrder: state.createdOrder,
   }
