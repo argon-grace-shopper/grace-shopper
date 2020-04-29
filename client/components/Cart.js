@@ -100,11 +100,13 @@ export const Cart = (props) => {
 
   return (
     <div className="cart-container">
-      <h2>Shopping Cart</h2>
+      <h2 style={{color: '#254d32'}}>Shopping Cart</h2>
       {!props.createdOrder.length || !props.createdOrder[0].products.length ? (
-        <div className="empty-cart">
-          <h3>The cart is empty</h3>
-          <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
+        <div style={{height: '300rm'}}>
+          <h1 style={{textAlign: 'center', color: '#254d32'}}>
+            Your cart is empty
+            <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
+          </h1>
         </div>
       ) : errorMessage ? (
         <div>{errorMessage}</div>

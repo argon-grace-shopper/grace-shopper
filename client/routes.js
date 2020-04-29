@@ -36,21 +36,27 @@ class Routes extends Component {
         <Route exact path="/cart" component={Cart} />
         <Route path="/success" component={Success} />
         <Route path="/canceled" component={Canceled} />
+        <Route>
+          <div style={{height: '300rm'}}>
+            <h1 style={{textAlign: 'center', color: '#254d32'}}>
+              We looked everywhere but couldn't find the page.
+              <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
+            </h1>
+          </div>
+        </Route>
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/account" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/admin" component={AdminMain} />
+            <Route exact path="/admin/products" component={AdminProducts} />
+            <Route exact path="/admin/users" component={AdminUsers} />
+            <Route exact path="/admin/orders" component={AdminOrders} />
           </Switch>
         )}
         {/* {isAdmin && ( */}
-        <Switch>
-          {/* Routes placed here are only available if you're an admin */}
-          <Route exact path="/admin" component={AdminMain} />
-          <Route exact path="/admin/products" component={AdminProducts} />
-          <Route exact path="/admin/users" component={AdminUsers} />
-          <Route exact path="/admin/orders" component={AdminOrders} />
-        </Switch>
+        {/* Routes placed here are only available if you're an admin */}
         {/* )} */}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />

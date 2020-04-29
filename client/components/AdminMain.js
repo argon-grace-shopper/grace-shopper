@@ -37,7 +37,7 @@ class Admin extends React.Component {
           </Card>
           <div>
             <Header id="header">
-              <h1>Admin Page</h1>
+              <h1>Admin Dashboard</h1>
             </Header>
             <Layout>
               <Tabs deafultActiveKey="1">
