@@ -192,3 +192,39 @@ router.put('/update-product-inventory', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/order-status-change', async (req, res, next) => {
+  try {
+    await Order.update(
+      {
+        status: req.body.status,
+      },
+      {
+        where: {
+          id: req.body.orderId,
+        },
+      }
+    )
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/order-status-change', async (req, res, next) => {
+  try {
+    await Order.update(
+      {
+        status: req.body.status,
+      },
+      {
+        where: {
+          id: req.body.orderId,
+        },
+      }
+    )
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})

@@ -81,6 +81,19 @@ export const updateOrderStatus = (orderId) => {
   }
 }
 
+export const changeOrderStatus = (orderId, status) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/cart/order-status-change`, {
+        orderId: orderId,
+        status: status,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export const updateInventoryQuantity = (productId, newInventoryQuantity) => {
   return async (dispatch) => {
     try {

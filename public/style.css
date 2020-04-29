@@ -28,6 +28,7 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: #c9f0ff;
 }
 
 form div {
@@ -38,7 +39,7 @@ form div {
 h1,
 h2 {
   text-align: center;
-  color: #254d32;
+  color: #e8f1f2;
 }
 
 hr {
