@@ -41,16 +41,14 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/account" component={UserHome} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/admin" component={AdminMain} />
+            <Route exact path="/admin/products" component={AdminProducts} />
+            <Route exact path="/admin/users" component={AdminUsers} />
+            <Route exact path="/admin/orders" component={AdminOrders} />
           </Switch>
         )}
         {/* {isAdmin && ( */}
-        <Switch>
-          {/* Routes placed here are only available if you're an admin */}
-          <Route exact path="/admin" component={AdminMain} />
-          <Route exact path="/admin/products" component={AdminProducts} />
-          <Route exact path="/admin/users" component={AdminUsers} />
-          <Route exact path="/admin/orders" component={AdminOrders} />
-        </Switch>
+        {/* Routes placed here are only available if you're an admin */}
         {/* )} */}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
