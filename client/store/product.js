@@ -14,6 +14,7 @@ export const addReview = (review) => ({
   type: ADD_REVIEW,
   review,
 })
+
 export const fetchSingleProduct = (id) => async (dispatch) => {
   try {
     const {data} = await axios.get(`/api/products/${id}`)
@@ -22,6 +23,7 @@ export const fetchSingleProduct = (id) => async (dispatch) => {
     console.log(err)
   }
 }
+
 export const fetchUpdateProduct = (product) => async (dispatch) => {
   try {
     const {data: updateProduct} = await axios.put(
@@ -33,6 +35,7 @@ export const fetchUpdateProduct = (product) => async (dispatch) => {
     console.log(err)
   }
 }
+
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     const {data: deleteProduct} = await axios.delete(`/api/products/${id}`)
@@ -41,13 +44,13 @@ export const deleteProduct = (id) => async (dispatch) => {
     console.log(err)
   }
 }
+
 const initialProduct = {}
+
 export default function productReducer(product = initialProduct, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
       return {...initialProduct, product: action.product}
-    //   case ADD_REVIEW:
-    //   return action.product;
     default:
       return product
   }

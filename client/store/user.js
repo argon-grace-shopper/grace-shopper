@@ -1,30 +1,17 @@
 import axios from 'axios'
 import history from '../history'
 
-/**
- * ACTION TYPES
- */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const SET_MY_PRODUCTS = 'SET_MY_PRODUCTS'
 const SET_MY_ORDERS = 'SET_MY_ORDERS'
 
-/**
- * INITIAL STATE
- */
 const defaultUser = {}
 
-/**
- * ACTION CREATORS
- */
 const getUser = (user) => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const setMyProducts = (myProducts) => ({type: SET_MY_PRODUCTS, myProducts})
 const setMyOrders = (myOrders) => ({type: SET_MY_ORDERS, myOrders})
-
-/**
- * THUNK CREATORS
- */
 
 export const fetchMyProducts = () => async (dispatch) => {
   try {
@@ -49,18 +36,6 @@ export const fetchMyProducts = () => async (dispatch) => {
 export const fetchMyOrders = () => async (dispatch) => {
   try {
     const {data} = await axios.get('/api/user/allOrders')
-
-    console.log('my data', data)
-    // const orderArr = []
-
-    // data.forEach(order => {
-    //   order.products.forEach(product => {
-    //     if (!productArr.includes(product.id)) {
-    //       productArr.push(product.id)
-    //     }
-    //   })
-    // })
-
     dispatch(setMyOrders(data))
   } catch (err) {
     console.error(err)
@@ -103,9 +78,6 @@ export const logout = () => async (dispatch) => {
   }
 }
 
-/**
- * REDUCER
- */
 export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:

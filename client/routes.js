@@ -47,10 +47,6 @@ class Routes extends Component {
             <Route exact path="/admin/orders" component={AdminOrders} />
           </Switch>
         )}
-        {/* {isAdmin && ( */}
-        {/* Routes placed here are only available if you're an admin */}
-        {/* )} */}
-        {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
     )
@@ -81,9 +77,6 @@ const mapDispatch = (dispatch) => {
 // when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes))
 
-/**
- * PROP TYPES
- */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,

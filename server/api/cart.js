@@ -16,13 +16,6 @@ const findByUser = (req) => {
 }
 
 const getGuestCart = async (req) => {
-  // this helper function retrieves the guest cart and outputs the
-  // guest cart in a structure that mimics a logged-in user’s cart
-  // req.session.cart = {‘productId’ : quantity }
-  // e.g.
-  // { '2': 4,
-  //   '3': 1 }
-
   const productAry = []
   if (req.session.cart) {
     const productIdAry = Object.keys(req.session.cart)

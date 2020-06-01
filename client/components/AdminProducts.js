@@ -20,14 +20,17 @@ class AdminProducts extends React.Component {
     this.onFinish = this.onFinish.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
+
   componentDidMount() {
     this.props.getAllProducts()
   }
+
   handleChange(e) {
     e.preventDefault()
     let id = e.target.value
     this.props.getSingleProduct(id)
   }
+
   onFinish(values) {
     let title = values.product.title
     let price = values.product.price
@@ -42,11 +45,13 @@ class AdminProducts extends React.Component {
     }
     this.props.getUpdatedProduct(product)
   }
+
   handleDelete(e) {
     e.preventDefault()
     let id = e.target.value
     this.props.deleteSingleProduct(id)
   }
+
   render() {
     const products = this.props.products
     return (

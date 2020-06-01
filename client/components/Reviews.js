@@ -46,10 +46,6 @@ export class Review extends React.Component {
   componentDidMount() {
     this.props.getReviews(this.props.productId)
     this.props.getMyProducts()
-
-    // if (this.props.user.myProducts.includes(this.props.productId)) {
-    // 	this.reviewFlag = true;
-    // }
   }
 
   render() {

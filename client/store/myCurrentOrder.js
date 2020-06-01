@@ -59,7 +59,7 @@ export const addToCart = (product) => {
 }
 
 export const saveCheckoutPrice = (product, orderId) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       await axios.put(`/api/cart/save-checkout-price`, {
         product: product,
@@ -72,7 +72,7 @@ export const saveCheckoutPrice = (product, orderId) => {
 }
 
 export const updateOrderStatus = (orderId) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       await axios.put(`/api/cart/order-status-update`, {orderId})
     } catch (error) {
@@ -82,7 +82,7 @@ export const updateOrderStatus = (orderId) => {
 }
 
 export const changeOrderStatus = (orderId, status) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       await axios.put(`/api/cart/order-status-change`, {
         orderId: orderId,
@@ -95,7 +95,7 @@ export const changeOrderStatus = (orderId, status) => {
 }
 
 export const updateInventoryQuantity = (productId, newInventoryQuantity) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       await axios.put('/api/cart/update-product-inventory', {
         productId: productId,

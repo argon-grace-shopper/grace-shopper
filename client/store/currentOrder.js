@@ -41,7 +41,7 @@ export default function orderReducer(order = {}, action) {
   switch (action.type) {
     case CREATE_ORDER:
       return action.order
-    case GET_SINGLE_PRODUCT:
+    case UPDATE_ORDER:
       return action.order
     default:
       return order

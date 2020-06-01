@@ -1,6 +1,3 @@
-// const router = require('express').Router()
-// module.exports = router
-
 function checkParamIdWithUserId(req, res, next) {
   if (req.user && req.params.userId === req.user.id) {
     next()

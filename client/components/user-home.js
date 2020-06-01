@@ -5,14 +5,10 @@ import {connect} from 'react-redux'
 import {Layout, Table, Button, Tabs} from 'antd'
 import {fetchMyOrders} from '../store'
 import {ProfileFilled, SettingFilled} from '@ant-design/icons'
-import AdminOrders from './AdminOrders'
 
 const {Header, Content, Footer} = Layout
 const {TabPane} = Tabs
 
-/**
- * COMPONENT
- */
 export const UserHome = (props) => {
   const [tableData, setData] = useState()
   const {email} = props
@@ -119,9 +115,6 @@ export const UserHome = (props) => {
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     email: state.user.email,
@@ -135,9 +128,6 @@ const mapDispatch = (dispatch) => ({
 
 export default connect(mapState, mapDispatch)(UserHome)
 
-/**
- * PROP TYPES
- */
 UserHome.propTypes = {
   email: PropTypes.string,
 }

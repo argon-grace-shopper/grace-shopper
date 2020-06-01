@@ -5,10 +5,6 @@ import {Menu, Dropdown} from 'antd'
 import {DownOutlined, ConsoleSqlOutlined} from '@ant-design/icons'
 
 export const menu = (props) => {
-  //   function handleMenuClick(e) {
-  //     console.log('props', props)
-  //     //   props.history.push(`/${e.target.value}`)
-  //   }
   return (
     <Menu>
       <Menu.Item key="0" value="admin/products" onClick={handleMenuClick}>
