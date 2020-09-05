@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 .app {
-  /* width: 960px; */
+  width: 100%;
   margin: auto;
   background-color: #e8f1f2;
 }
+
 body {
   font-family: open sans, sans-serif;
 }
@@ -19,6 +21,9 @@ label {
   background-color: #254d32;
 }
 
+p {
+  font-size: 0.8rem;
+}
 .nav {
   display: flex;
   justify-content: space-between;
@@ -79,7 +84,8 @@ hr {
 }
 
 #footer {
-  background-color: #e8f1f2;
+  background-color: #ced8da;
+  text-align: center;
 }
 
 #content {
@@ -92,6 +98,13 @@ hr {
   align-content: center;
   padding: 5% 20% 5% 20%;
   background-color: white;
+}
+
+.single-product-img {
+  height: 300px;
+  width: 300px;
+  margin-bottom: 24px;
+  margin-right: 24px;
 }
 
 .single-product-info {
@@ -118,6 +131,11 @@ hr {
 
 .all-products-panel img {
   max-width: 100%;
+}
+
+.all-products-img {
+  height: 12rem;
+  object-fit: contain;
 }
 
 .add-button {
@@ -179,4 +197,19 @@ hr {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   border-radius: 2px;
+}
+
+.img-cart {
+  width: 150px;
+  height: 150px;
+  padding-right: 1rem;
+  object-fit: cover;
+}
+
+.logo {
+  font-family: 'Sacramento', cursive;
+  text-align: center;
+  color: #c9f0ff;
+  font-size: 80px;
+  margin: 0;
 }

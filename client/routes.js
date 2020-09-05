@@ -15,6 +15,7 @@ import AdminOrders from './components/AdminOrders'
 import AdminUsers from './components/AdminUsers'
 import Success from './components/Success'
 import Canceled from './components/Canceled'
+import Home from './components/Home'
 /**
  * COMPONENT
  */
@@ -28,6 +29,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors  */}
+        <Route path="/home" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/products/:id" component={SingleProduct} />

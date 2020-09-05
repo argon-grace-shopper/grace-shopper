@@ -75,7 +75,6 @@ export const UserHome = (props) => {
     dataCalc()
   }, [props.myOrders])
 
-  console.log('look', tableData)
   return (
     <div className="center">
       <Layout>
@@ -109,7 +108,7 @@ export const UserHome = (props) => {
             </TabPane>
           </Tabs>
         </Content>
-        <Footer id="footer"></Footer>
+        <Footer id="footer">Copyright © 2020 Plant Store</Footer>
       </Layout>
     </div>
   )

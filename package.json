@@ -65,6 +65,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
+    "react-responsive-carousel": "^3.2.9",
     "react-router-dom": "^5.1.2",
     "react-stripe-checkout": "^2.6.3",
     "redux": "^4.0.1",

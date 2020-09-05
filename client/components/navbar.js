@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {ShoppingFilled, SettingFilled} from '@ant-design/icons'
-import {Badge, Popover} from 'antd'
+import {Badge, Popover, Button} from 'antd'
 import {fetchMyCurrentOrder} from '../store/myCurrentOrder'
 
 export const Navbar = (props) => {
@@ -56,11 +56,14 @@ export const Navbar = (props) => {
   return (
     <div id="nav-container">
       <a href="/home">
-        <h1 style={{color: '#c9f0ff'}}>Plant Store</h1>
+        <p className="logo">the plant store</p>
       </a>
       <nav>
         <div className="nav">
-          <Link to="/products">Products</Link>
+          <Link to="/products">
+            <Button>Shop Now</Button>
+          </Link>
+
           <div>
             <Popover placement="bottomRight" content={content}>
               <a>

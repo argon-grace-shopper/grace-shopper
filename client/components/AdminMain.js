@@ -53,7 +53,7 @@ class Admin extends React.Component {
                 </TabPane>
               </Tabs>
               <Content id="content"></Content>
-              <Footer id="footer"></Footer>
+              <Footer id="footer">Copyright © 2020 Plant Store</Footer>
             </Layout>
           </div>
         </Layout>

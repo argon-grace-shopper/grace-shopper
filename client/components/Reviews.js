@@ -66,8 +66,10 @@ export class Review extends React.Component {
           reviews.map((review) => {
             return (
               <div key={review.id} className="reviews-panel">
-                <p>{review.description}</p>
-                <p>Posted: {review.createdAt}</p>
+                <p style={{fontStyle: 'italic'}}>
+                  "{review.description}" -{' '}
+                  <span>Posted: {review.createdAt}</span>{' '}
+                </p>
               </div>
             )
           })

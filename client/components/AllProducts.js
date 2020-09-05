@@ -76,7 +76,10 @@ export class AllProducts extends React.Component {
                     return (
                       <Card className="all-products-panel" key={product.id}>
                         <Link product={product} to={`/products/${product.id}`}>
-                          <img src={product.imageUrl} />
+                          <img
+                            className="all-products-img"
+                            src={product.imageUrl}
+                          />
                           <p>{product.title}</p>
                         </Link>
                         <small>$ {product.price}</small>
@@ -92,7 +95,7 @@ export class AllProducts extends React.Component {
             <Pagination className="center" defaultCurrent={1} total={5} />
           </Content>
         </Layout>
-        <Footer id="footer"></Footer>
+        <Footer id="footer">Copyright © 2020 Plant Store</Footer>
       </Layout>
     )
   }

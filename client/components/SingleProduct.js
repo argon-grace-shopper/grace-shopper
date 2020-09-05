@@ -55,14 +55,18 @@ class SingleProduct extends React.Component {
         <Header id="header">
           <h1>{product.title}</h1>
         </Header>
+
         <Content>
           <div className="single-product">
             <Card>
               <div className="single-product-info">
-                <img src={product.imageUrl} style={{width: 300, height: 300}} />
+                <img className="single-product-img" src={product.imageUrl} />
                 <div>
                   <h3>{product.title}</h3>
                   <p> ${product.price}</p>
+                  {!product.inventoryQuantity > 0 && (
+                    <p style={{color: '#3ab795'}}>SOLD OUT!</p>
+                  )}
                 </div>
               </div>
               {product.inventoryQuantity > 0 ? (
@@ -95,7 +99,7 @@ class SingleProduct extends React.Component {
             </Collapse>
           </div>
         </Content>
-        <Footer id="footer">Footer</Footer>
+        <Footer id="footer">Copyright © 2020 Plant Store</Footer>
       </Layout>
     ) : (
       <div>...Loading </div>
