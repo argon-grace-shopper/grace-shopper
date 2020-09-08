@@ -108,7 +108,7 @@ export const UserHome = (props) => {
             </TabPane>
           </Tabs>
         </Content>
-        <Footer id="footer">Copyright © 2020 Plant Store</Footer>
+        <Footer id="footer">Copyright © 2020 The Plant Store</Footer>
       </Layout>
     </div>
   )

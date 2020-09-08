@@ -109,7 +109,7 @@ export const Cart = (props) => {
         {!props.createdOrder.length ||
         !props.createdOrder[0].products.length ? (
           <div style={{height: '300rm'}}>
-            <h1 style={{textAlign: 'center', color: '#254d32'}}>
+            <h1 id="empty-cart">
               Your cart is empty
               <img src="https://iconbug.com/download/size/512/icon/1217/sad-seedling/" />
             </h1>
@@ -183,7 +183,11 @@ export const Cart = (props) => {
                   role="link"
                   disabled={isDisabled}
                   onClick={handleCheckoutClick}
-                  style={{backgroundColor: '#254D32', borderColor: '#254D32'}}
+                  style={{
+                    backgroundColor: '#254D32',
+                    borderColor: '#254D32',
+                    marginBottom: '0.7rem',
+                  }}
                 >
                   Checkout
                 </Button>
@@ -191,7 +195,8 @@ export const Cart = (props) => {
             </div>
           </div>
         )}
-      </div>
+      </div>{' '}
+      <Footer id="footer">Copyright © 2020 The Plant Store</Footer>
     </>
   )
 }

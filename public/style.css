@@ -52,10 +52,10 @@ hr {
   background-color: #c9f0ff;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-  text-align: center;
+.pagination {
+  text-align: right;
+  padding-top: 2rem;
+  padding-right: 5%;
 }
 
 .landing {
@@ -148,6 +148,7 @@ hr {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  height: auto;
 }
 .not-enough-stock {
   font-size: 11px;
@@ -179,6 +180,7 @@ hr {
 }
 .subtotal {
   font-size: 20px;
+  font-weight: bold;
 }
 
 .success-page-container {
@@ -212,4 +214,15 @@ hr {
   color: #c9f0ff;
   font-size: 80px;
   margin: 0;
+}
+
+#greenhouse-img {
+  width: 100%;
+}
+
+#empty-cart {
+  font-family: 'Sacramento', cursive;
+  font-size: 60px;
+  text-align: center;
+  color: #254d32;
 }

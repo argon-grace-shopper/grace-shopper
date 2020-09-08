@@ -66,6 +66,7 @@ export class AllProducts extends React.Component {
             )}
           </Sider>
           <Content id="content">
+            <Pagination className="pagination" defaultCurrent={1} total={5} />
             <div className="all-products-panel-container">
               {products ? (
                 products.map((product) => {
@@ -91,11 +92,9 @@ export class AllProducts extends React.Component {
                 <h3>Loading...</h3>
               )}
             </div>
-
-            <Pagination className="center" defaultCurrent={1} total={5} />
           </Content>
         </Layout>
-        <Footer id="footer">Copyright © 2020 Plant Store</Footer>
+        <Footer id="footer">Copyright © 2020 The Plant Store</Footer>
       </Layout>
     )
   }
