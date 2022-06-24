@@ -54,7 +54,7 @@
     "express-session": "^1.15.1",
     "got": "^11.0.3",
     "history": "^4.9.0",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.5.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
